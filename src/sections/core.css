@@ -1,0 +1,425 @@
+/* The homepage's only section: the composition sits directly under the
+   nav (a small, intentional gap — the trunk's own height — rather than a
+   vertically-centered block floating in the viewport). min-height keeps
+   the footer below the first screen, as before, and accounts for the
+   sticky nav's own row. */
+.core {
+  min-height: calc(100svh - 4.5rem);
+  display: flex;
+  align-items: flex-start;
+  padding-block: clamp(0.25rem, 1vw, 0.75rem) clamp(0.75rem, 2vw, 1.5rem);
+}
+
+.branch {
+  width: 100%;
+}
+
+/* ============================================================
+   GEOMETRY
+   Three equal columns with a gap. The trunk sits on the first
+   column's centre line; the span reaches exactly to the third
+   column's centre line; the drops land on columns two and three
+   — every line is on its project's own axis (see the min-width
+   block below for the desktop centring; the collapsed layout
+   redefines all of it).
+   ============================================================ */
+
+.branch {
+  --gap: clamp(1.5rem, 3.2vw, 3rem);
+  --col: calc((100% - 2 * var(--gap)) / 3);
+  --half: calc(var(--col) / 2); /* a column's centre line */
+  --trunk: clamp(2rem, 3.5vw, 3rem); /* total height above the nodes */
+  --junction: 55%; /* where the span crosses the trunk */
+  position: relative;
+  padding-top: var(--trunk);
+}
+
+.branch__lines {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: var(--trunk);
+  pointer-events: none;
+}
+
+.branch__trunk,
+.branch__span,
+.branch__drop {
+  position: absolute;
+  background: var(--rule-strong);
+}
+
+.branch__trunk {
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform 620ms var(--ease-out);
+}
+
+.branch__span {
+  left: var(--half);
+  top: var(--junction);
+  height: 1px;
+  width: calc(2 * (var(--col) + var(--gap)));
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 720ms var(--ease-out) 380ms;
+}
+
+.branch__drop {
+  top: var(--junction);
+  bottom: 0;
+  width: 1px;
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform 380ms var(--ease-out);
+}
+
+.branch__drop[data-col='2'] {
+  left: calc(var(--half) + var(--col) + var(--gap));
+  transition-delay: 820ms;
+}
+
+.branch__drop[data-col='3'] {
+  left: calc(var(--half) + 2 * (var(--col) + var(--gap)));
+  transition-delay: 960ms;
+}
+
+.branch.is-drawn .branch__trunk,
+.branch.is-drawn .branch__drop {
+  transform: scaleY(1);
+}
+
+.branch.is-drawn .branch__span {
+  transform: scaleX(1);
+}
+
+/* ---------- Columns ---------- */
+
+.branch__cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap);
+  align-items: stretch;
+}
+
+.branch__link {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: var(--space-4);
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 500ms var(--ease-out),
+    transform 500ms var(--ease-out);
+  transition-delay: calc(1000ms + var(--i) * 90ms);
+}
+
+.branch.is-drawn .branch__link {
+  opacity: 1;
+  transform: none;
+}
+
+/* The node sits exactly on the line each branch descends from. */
+.branch__node {
+  position: absolute;
+  /* Sits on the end of the line this branch descends from: the
+     columns box starts exactly where .branch__lines ends. */
+  top: -3px;
+  left: -3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1px solid var(--rule-strong);
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+
+.branch__col {
+  position: relative;
+}
+
+/* Restrained, project-specific accent — used only as a thin line, a hover
+   state, a bullet marker, and a tint on the index, never as a fill. Pulled
+   from each project's own visual identity: Barclay's copper, the site's
+   existing drafting-blue for Notebook (already the "× AI" colour), and a
+   muted navy + restrained orange for CS 1501, echoing its blueprint
+   annotations without touching the navy typography. */
+.branch__col[data-accent='barclay-woods'] {
+  --col-accent: #9c5330;
+}
+.branch__col[data-accent='notebook'] {
+  --col-accent: var(--accent);
+}
+.branch__col[data-accent='cs1501'] {
+  --col-accent: #2c3d5e;
+  --col-accent-marker: #bd6a2e;
+}
+
+.branch__index {
+  color: color-mix(in srgb, var(--col-accent, var(--ink-25)) 45%, var(--ink-25));
+}
+
+/* Captions are one line in every column, so the three headers are the
+   same height and the media frames start at the same baseline without a
+   reserved minimum (which only added dead space above the media). */
+.branch__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.branch__title {
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-weight: 500;
+  letter-spacing: -0.018em;
+  line-height: 1.15;
+  display: inline-block;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur-fast) var(--ease);
+  justify-self: start;
+}
+
+.branch__caption {
+  font-size: var(--size-small);
+  color: var(--ink-70);
+  max-width: 26ch;
+  text-wrap: pretty;
+}
+
+/* ---------- Embedded preview ----------
+   One consistent rounded frame across all three projects: same ratio,
+   same radius, overflow hidden, a hairline border rather than a filled
+   card. Each source fits inside it proportionally (see Core.tsx). */
+.branch__frame {
+  margin-top: var(--space-1);
+  display: block;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid var(--rule);
+  background: var(--paper-sunk);
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.branch__frame .media {
+  transition: transform var(--dur-slow) var(--ease-out);
+  background: var(--paper-sunk);
+}
+
+/* Barclay's screenshot is `contain`ed, so the frame shows a strip on each
+   side of it. Paint that strip in the screenshot's own edge cream
+   (#D9D0C3, sampled from barclay-home-preview.png) so the capture reads
+   as continuing to the frame's edges. Barclay only. */
+.branch__col[data-accent='barclay-woods'] .branch__frame,
+.branch__col[data-accent='barclay-woods'] .branch__frame .media {
+  background: #d9d0c3;
+}
+
+.branch__bullets {
+  flex: 1 1 auto;
+  margin-top: var(--space-1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.branch__bullets li {
+  position: relative;
+  padding-left: 1.1rem;
+  font-size: var(--size-small);
+  color: var(--ink-70);
+  max-width: 30ch;
+  text-wrap: pretty;
+}
+
+.branch__bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--col-accent-marker, var(--col-accent, var(--ink-25)));
+}
+
+.branch__cue {
+  margin-top: var(--space-4);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--size-small);
+  color: var(--ink);
+}
+
+.branch__arrow {
+  color: var(--ink-45);
+  transition:
+    transform var(--dur) var(--ease-out),
+    color var(--dur) var(--ease);
+}
+
+/* ---------- Desktop axis ----------
+   Everything in a column hangs from its centre line — the line's drop,
+   the node on it, the number/title/caption, the media, the bullets block
+   and the cue — so each branch reads as one vertical unit. Bullet text
+   itself stays left-aligned. */
+@media (min-width: 861px) {
+  .branch__trunk {
+    left: var(--half);
+  }
+
+  .branch__node {
+    left: calc(50% - 3px);
+  }
+
+  .branch__head {
+    align-items: center;
+    text-align: center;
+  }
+
+  .branch__bullets {
+    align-self: center;
+  }
+
+  .branch__cue {
+    align-self: center;
+  }
+}
+
+/* Collapsed layout stacks the columns; keep the media from getting tall. */
+@media (max-width: 860px) {
+  .branch__frame {
+    max-width: 34rem;
+    width: 100%;
+  }
+}
+
+.branch__link:hover .branch__node,
+.branch__link:focus-visible .branch__node {
+  background: var(--col-accent, var(--accent));
+  border-color: var(--col-accent, var(--accent));
+}
+
+.branch__link:hover .branch__title {
+  border-bottom-color: var(--col-accent, var(--accent));
+}
+
+@media (hover: hover) {
+  .branch__link:hover .branch__frame {
+    transform: translateY(-3px);
+  }
+  .branch__link:hover .branch__frame .media {
+    transform: scale(1.012);
+  }
+}
+
+.branch__link:hover .branch__arrow,
+.branch__link:focus-visible .branch__arrow {
+  transform: translateX(4px);
+  color: var(--col-accent, var(--accent));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .branch__frame,
+  .branch__frame .media,
+  .branch__arrow {
+    transition: none;
+  }
+  .branch__link:hover .branch__frame,
+  .branch__link:hover .branch__frame .media,
+  .branch__link:hover .branch__arrow {
+    transform: none;
+  }
+}
+
+/* ---------- Collapsed geometry ----------
+   One spine, three ticks. Same relationship, no three-column
+   arithmetic to shrink into illegibility. */
+
+@media (max-width: 860px) {
+  .core {
+    min-height: 0;
+  }
+
+  .branch {
+    --trunk: 2.5rem;
+    padding-left: var(--space-6);
+  }
+
+  .branch__lines {
+    height: 100%;
+    inset: 0;
+  }
+
+  .branch__span,
+  .branch__drop {
+    display: none;
+  }
+
+  .branch__trunk {
+    height: calc(100% - 3.5rem);
+  }
+
+  .branch__cols {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .branch__col + .branch__col {
+    border-top: 1px solid var(--rule);
+  }
+
+  .branch__link {
+    padding-block: var(--space-5);
+  }
+
+  .branch__head {
+    min-height: 0;
+  }
+
+  .branch__node {
+    top: calc(var(--space-5) + 0.35rem);
+    left: calc(-1 * var(--space-6) - 3px);
+  }
+
+  /* Short tick from the spine to each node. */
+  .branch__col::before {
+    content: '';
+    position: absolute;
+    left: calc(-1 * var(--space-6));
+    top: calc(var(--space-5) + 0.35rem + 3px);
+    width: var(--space-6);
+    height: 1px;
+    background: var(--rule-strong);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 380ms var(--ease-out);
+    transition-delay: calc(400ms + var(--i) * 110ms);
+  }
+
+  .branch.is-drawn .branch__col::before {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .branch__trunk,
+  .branch__span,
+  .branch__drop,
+  .branch__col::before {
+    transform: none !important;
+    transition: none;
+  }
+  .branch__link {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

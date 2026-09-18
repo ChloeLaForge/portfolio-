@@ -1,0 +1,3946 @@
+/* ============================================================
+   CASE STUDY
+   Layout for data-driven project pages. Leans on the existing
+   text-section / caption / full-bleed vocabulary; adds a media
+   scale ladder and a connected numbered sequence.
+   ============================================================ */
+
+/* ---------- Intro ---------- */
+.ct-intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+.ct-intro .lead {
+  max-width: var(--measure);
+}
+
+/* Hero key points — a tight scannable list right under the intro. */
+.ct-intro__points {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: var(--measure);
+  margin-top: var(--space-2);
+}
+
+.ct-intro__points li {
+  position: relative;
+  padding-left: 1.25rem;
+  font-size: var(--size-body);
+  line-height: 1.5;
+  color: var(--ink-70);
+  text-wrap: pretty;
+}
+
+.ct-intro__points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 0.625rem;
+  height: 1px;
+  background: var(--rule-strong);
+}
+
+/* ---------- Shared: scannable bullets + lead line ---------- */
+/* An emphatic opening line under a heading — one step down from the
+   heading itself so the hierarchy stays clear. */
+.text-section__lead {
+  font-size: var(--size-lead);
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--ink);
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+.ct-bullets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: var(--measure);
+}
+
+.ct-bullets li {
+  position: relative;
+  padding-left: 1.25rem;
+  color: var(--ink-70);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.ct-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 0.625rem;
+  height: 1px;
+  background: var(--rule-strong);
+}
+
+/* A bullet's optional bold lead-in — read first when skimming. */
+.ct-bullets__lead {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ---------- Comparison ---------- */
+.ct-compare__grid {
+  display: grid;
+  gap: var(--space-5);
+}
+
+@media (min-width: 720px) {
+  .ct-compare__grid[data-cols='3'] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(var(--space-5), 3vw, var(--space-7));
+  }
+  .ct-compare__grid[data-cols='2'] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.ct-compare__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule);
+}
+
+.ct-compare__col[data-last] {
+  border-top-color: var(--ink);
+}
+
+.ct-compare__label {
+  color: var(--ink-45);
+}
+
+.ct-compare__col[data-last] .ct-compare__label {
+  color: var(--accent);
+}
+
+.ct-compare__text {
+  font-size: var(--size-small);
+  line-height: 1.55;
+  color: var(--ink-70);
+  text-wrap: pretty;
+}
+
+.ct-compare__col[data-last] .ct-compare__text {
+  color: var(--ink);
+}
+
+.ct-compare__eyebrow {
+  color: var(--ink-25);
+}
+
+.ct-compare__tags {
+  margin-top: var(--space-1);
+  color: var(--accent);
+}
+
+/* ---------- Context: project framing between the hook and the detail ---------- */
+.ct-context__points {
+  display: grid;
+  gap: var(--space-5);
+  margin-top: var(--space-1);
+}
+
+@media (min-width: 640px) {
+  .ct-context__points {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(var(--space-5), 3vw, var(--space-6));
+  }
+}
+
+.ct-context__point {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule);
+}
+
+.ct-context__point-label {
+  color: var(--ink-45);
+}
+
+.ct-context__point-text {
+  font-size: var(--size-small);
+  line-height: 1.55;
+  color: var(--ink-70);
+  text-wrap: pretty;
+}
+
+.ct-context__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  margin-top: var(--space-1);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule);
+}
+
+.ct-context__meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.ct-context__meta-row dd {
+  margin: 0;
+  font-size: var(--size-small);
+  color: var(--ink-70);
+}
+
+/* ---------- Statement ---------- */
+.ct-statement__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  max-width: var(--measure);
+}
+
+.ct-statement__line {
+  font-size: var(--size-subtitle);
+  font-weight: 500;
+  letter-spacing: var(--track-title);
+  line-height: 1.3;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+/* Headingless statement — a standalone beat between sections. */
+.ct-statement--bare {
+  padding-block: clamp(2.5rem, 5vw, 4.5rem);
+  border-top: 1px solid var(--rule);
+}
+
+.ct-statement--bare .ct-statement__body {
+  max-width: 46ch;
+  padding-left: var(--space-5);
+  border-left: 2px solid var(--rule-strong);
+}
+
+.ct-statement--bare[data-closing] {
+  border-top-color: var(--ink);
+  padding-top: clamp(3rem, 6vw, 5rem);
+}
+
+.ct-statement--bare[data-closing] .ct-statement__body {
+  max-width: 40ch;
+  border-left-color: var(--accent);
+}
+
+.ct-statement--bare[data-closing] .ct-statement__line {
+  font-size: var(--size-subtitle);
+  line-height: 1.25;
+}
+
+/* ---------- Media figure ---------- */
+.mfig {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.mfig__frame {
+  overflow: hidden;
+  background: var(--paper-sunk);
+}
+
+.mfig[data-scale='inset'] {
+  align-items: flex-start;
+}
+
+.mfig[data-scale='inset'] .mfig__frame {
+  max-width: 32rem;
+}
+
+/* Prominent: spill a little past the reading measure on wide screens.
+   The pull stays inside the gutter so the page never scrolls sideways. */
+@media (min-width: 1080px) {
+  .mfig[data-scale='wide'] {
+    margin-inline: calc(-1 * clamp(0px, 4vw, 3.5rem));
+  }
+  .mfig[data-scale='wide'] > .caption {
+    padding-inline: clamp(0px, 4vw, 3.5rem);
+  }
+}
+
+/* Full: break the page gutters entirely (once per page at most). */
+.mfig[data-scale='full'] {
+  margin-inline: calc(-1 * var(--gutter));
+}
+
+.mfig[data-scale='full'] > .caption {
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---------- Media + text ---------- */
+.ct-mediatext {
+  display: grid;
+  gap: clamp(var(--space-5), 4vw, var(--space-8));
+  align-items: center;
+  padding-block: clamp(2.5rem, 5vw, 4.5rem);
+  border-top: 1px solid var(--rule);
+}
+
+.ct-mediatext__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: var(--measure);
+  font-size: var(--size-lead);
+  line-height: 1.6;
+  color: var(--ink-70);
+}
+
+.ct-mediatext__text p {
+  text-wrap: pretty;
+}
+
+.ct-mediatext__media {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.ct-mediatext__media .mfig__frame {
+  overflow: hidden;
+  background: var(--paper-sunk);
+}
+
+@media (min-width: 900px) {
+  .ct-mediatext {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+  }
+  .ct-mediatext[data-side='left'] .ct-mediatext__text {
+    order: 2;
+  }
+  .ct-mediatext[data-side='left'] .ct-mediatext__media {
+    order: 1;
+  }
+}
+
+/* A tiny outbound link at the foot of the text column — thin border,
+   mono label, no fill. Quieter than the prose around it. */
+.ct-mediatext__link {
+  align-self: flex-start;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--rule-strong);
+  font-family: var(--font-mono);
+  font-size: var(--size-label);
+  font-weight: 450;
+  letter-spacing: var(--track-label);
+  line-height: 1.4;
+  color: var(--ink-70);
+  transition:
+    color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+
+.ct-mediatext__link:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+/* A short closing line under the bullets — quieter than `lead`, for
+   sections that favor bullets over prose. */
+.ct-mediatext__takeaway {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule);
+  font-size: var(--size-small);
+  font-style: italic;
+  color: var(--ink-45);
+  text-wrap: pretty;
+}
+
+/* Eyebrow label under a media+text heading — same treatment as the
+   sequence intro label it sits beside conceptually. */
+.ct-mediatext__intro {
+  margin-top: calc(-1 * var(--space-2));
+}
+
+/* A small label directly above a static screenshot, framing it as a
+   deliberately captured system state rather than a paused video. */
+.ct-mediatext__media-label {
+  color: var(--ink-45);
+}
+
+/* A short mono flow-line under the caption (e.g. Stripe API → ...). */
+.ct-mediatext__annotation {
+  color: var(--ink-25);
+  padding-top: var(--space-1);
+}
+
+/* A compact numbered interaction loop beside the media — deliberately
+   lighter than .ct-sequence (no connecting spine, tighter rhythm) so
+   it can sit in a narrower column without dominating the figure. */
+.ct-mediatext__steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.ct-mediatext__step {
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr);
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule);
+}
+
+.ct-mediatext__step:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.ct-mediatext__step-index {
+  padding-top: 0.2em;
+  color: var(--accent);
+}
+
+.ct-mediatext__step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.ct-mediatext__step-title {
+  font-size: var(--size-body);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.ct-mediatext__step-body {
+  font-size: var(--size-small);
+  line-height: 1.5;
+  color: var(--ink-70);
+  text-wrap: pretty;
+}
+
+/* ---------- Dual media: static evidence + a stack of proof clips ---------- */
+.ct-dual {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding-block: clamp(2.5rem, 5vw, 4.5rem);
+  border-top: 1px solid var(--rule);
+}
+
+.ct-dual__para {
+  max-width: var(--measure);
+  color: var(--ink-70);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.ct-dual__grid {
+  display: grid;
+  gap: var(--space-6);
+}
+
+@media (min-width: 900px) {
+  .ct-dual__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(var(--space-6), 5vw, var(--space-8));
+    /* Text on the left, media on the right, both flowing top-down —
+       the first right-hand clip should start level with the heading
+       rather than being centred against the column. */
+    align-items: start;
+  }
+}
+
+.ct-dual__left,
+.ct-dual__right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.ct-dual__right {
+  gap: var(--space-6);
+}
+
+/* Small framing text above/below the left-column figure — its own
+   compact card, distinct from the section's own heading/body. */
+.ct-dual__left-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  max-width: 32rem;
+}
+
+.ct-dual__left-intro {
+  color: var(--ink-45);
+}
+
+.ct-dual__left-lead {
+  font-size: var(--size-small);
+  line-height: 1.5;
+  color: var(--ink-70);
+  text-wrap: pretty;
+}
+
+/* A minimal directional line under the left figure, pointing at the
+   right-hand media — restrained, no diagram styling. */
+.ct-dual__arrow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: var(--size-small);
+  color: var(--ink-45);
+}
+
+.ct-dual__arrow-glyph {
+  font-family: var(--font-mono);
+  color: var(--ink-25);
+}
+
+/* ---------- Sequence ---------- */
+.ct-sequence {
+  display: grid;
+  gap: var(--space-5);
+  padding-block: clamp(2.5rem, 5vw, 4.5rem);
+  border-top: 1px solid var(--rule);
+}
+
+@media (min-width: 900px) {
+  .ct-sequence {
+    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+    gap: clamp(var(--space-6), 6vw, var(--space-9));
+  }
+}
+
+.ct-sequence__intro {
+  margin-top: var(--space-3);
+  max-width: 30ch;
+}
+
+/* The content column: an optional lead line, an optional intro
+   figure, then the numbered steps. */
+.ct-sequence__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+/* The sequence lead sits opposite the heading, not under it, so it
+   can stay at subhead scale. */
+.ct-sequence__lead {
+  font-size: var(--size-subtitle);
+  font-weight: 500;
+  letter-spacing: var(--track-title);
+  line-height: 1.3;
+  color: var(--ink);
+  max-width: 34ch;
+}
+
+/* A short explanatory subhead under the lead — opposite the heading,
+   not a full text-section body. */
+.ct-sequence__subhead {
+  color: var(--ink-70);
+  line-height: 1.6;
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+/* A smaller, quieter secondary principle under the lead — a prior
+   heading kept on as a supporting line instead of dropped outright. */
+.ct-sequence__principle {
+  font-size: var(--size-small);
+  font-style: italic;
+  color: var(--ink-45);
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+/* A small persistent chip chain reinforcing a section's through-line
+   — no meaningful height, wraps freely on mobile. */
+.ct-sequence__cue {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: calc(-1 * var(--space-2));
+}
+
+.ct-sequence__cue-arrow {
+  font-family: var(--font-mono);
+  color: var(--ink-25);
+}
+
+.ct-sequence__cue-chip {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  padding: 0.3rem 0.65rem;
+}
+
+.ct-sequence__cue-chip[data-tone='green'] {
+  color: var(--bw-green);
+  border-color: color-mix(in srgb, var(--bw-green) 55%, var(--rule-strong));
+  background: color-mix(in srgb, var(--bw-green) 8%, var(--paper));
+}
+.ct-sequence__cue-chip[data-tone='rust'] {
+  color: var(--bw-rust);
+  border-color: color-mix(in srgb, var(--bw-rust) 55%, var(--rule-strong));
+  background: color-mix(in srgb, var(--bw-rust) 8%, var(--paper));
+}
+.ct-sequence__cue-chip[data-tone='plum'] {
+  color: var(--bw-plum);
+  border-color: color-mix(in srgb, var(--bw-plum) 55%, var(--rule-strong));
+  background: color-mix(in srgb, var(--bw-plum) 8%, var(--paper));
+}
+.ct-sequence__cue-chip[data-tone='brown'] {
+  color: var(--paper);
+  font-weight: 500;
+  border-color: var(--bw-brown);
+  background: var(--bw-brown);
+}
+.ct-sequence__cue-chip[data-tone='slate'] {
+  color: var(--bw-slate);
+  border-color: color-mix(in srgb, var(--bw-slate) 55%, var(--rule-strong));
+  background: color-mix(in srgb, var(--bw-slate) 8%, var(--paper));
+}
+
+/* Small mono label above a step's title — the step's own number
+   comes from .ct-sequence__index, so this is the tail only. */
+.ct-sequence__step-eyebrow {
+  color: var(--ink-45);
+}
+
+/* One intro figure for the whole sequence — kept to a reading size
+   so it never turns cinematic. */
+.ct-sequence__body > .mfig {
+  margin: 0;
+  align-items: flex-start;
+}
+
+.ct-sequence__body > .mfig .mfig__frame {
+  width: 100%;
+  max-width: 42rem;
+}
+
+.ct-sequence__steps {
+  display: flex;
+  flex-direction: column;
+}
+
+.ct-sequence__step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr);
+  gap: var(--space-4);
+  padding-block: clamp(var(--space-5), 3vw, var(--space-7));
+  border-top: 1px solid var(--rule);
+}
+
+/* Side layout: a tighter block rhythm — the rows are wider, not
+   taller, so the run of steps doesn't need as much vertical air. */
+[data-step-layout='side'] .ct-sequence__step {
+  padding-block: clamp(var(--space-4), 2.4vw, var(--space-6));
+}
+
+.ct-sequence__step:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+/* A hairline spine connecting the steps — makes the run read as one
+   sequence rather than three unrelated blocks. */
+.ct-sequence__step::before {
+  content: '';
+  position: absolute;
+  left: calc(1.625rem - 0.5px);
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--rule);
+}
+
+.ct-sequence__step:first-child::before {
+  top: 1.5rem;
+}
+
+.ct-sequence__step:last-child::before {
+  bottom: auto;
+  height: 1.5rem;
+}
+
+.ct-sequence__index {
+  position: relative;
+  z-index: 1;
+  padding-top: 0.15em;
+  background: var(--paper);
+  height: max-content;
+}
+
+.ct-sequence__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.ct-sequence__content-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+/* Side layout: text left, media right, media aligned to the top of
+   its text rather than trailing it after bullets. Roughly 38/62. */
+@media (min-width: 800px) {
+  [data-step-layout='side'] .ct-sequence__content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    gap: clamp(var(--space-5), 3vw, var(--space-7));
+    align-items: start;
+  }
+}
+
+.ct-sequence__content-media {
+  min-width: 0;
+}
+
+[data-step-layout='side'] .ct-sequence__content-media .mfig {
+  margin-top: 0;
+}
+
+.ct-sequence__title {
+  font-size: var(--size-body);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.ct-sequence__para {
+  color: var(--ink-70);
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+.ct-sequence__content .mfig {
+  margin-top: var(--space-3);
+}
+
+/* Inside a sequence the left edge is the number spine, so a prominent
+   figure only spills to the right. */
+@media (min-width: 1080px) {
+  .ct-sequence__content .mfig[data-scale='wide'],
+  .ct-sequence__body > .mfig[data-scale='wide'] {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .ct-sequence__step {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+  .ct-sequence__step::before {
+    display: none;
+  }
+  .ct-sequence__index {
+    background: none;
+  }
+}
+
+/* ============================================================
+   FEATURE OVERVIEW — "solution at a glance" exhibit
+   A tight grid of cropped product screens, lightly labelled.
+   Sized so the whole exhibit reads inside roughly one viewport.
+   ============================================================ */
+.ct-overview {
+  display: grid;
+  gap: var(--space-5);
+  padding-block: clamp(2.5rem, 5vw, 4.5rem);
+  border-top: 1px solid var(--rule);
+}
+
+@media (min-width: 900px) {
+  .ct-overview {
+    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+    gap: clamp(var(--space-6), 6vw, var(--space-9));
+  }
+}
+
+.ct-overview__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+.ct-overview__grid {
+  display: grid;
+  gap: var(--space-4) var(--space-5);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 560px) {
+  .ct-overview__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1000px) {
+  .ct-overview__grid[data-count='4'] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-3) var(--space-4);
+  }
+  .ct-overview__grid[data-count='5'],
+  .ct-overview__grid[data-count='6'],
+  .ct-overview__grid[data-count='7'],
+  .ct-overview__grid[data-count='8'] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.ct-overview__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.ct-overview__frame {
+  overflow: hidden;
+  background: var(--paper-sunk);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  aspect-ratio: 3 / 2;
+}
+
+.ct-overview__frame .media {
+  height: 100%;
+}
+
+.ct-overview__name {
+  margin-top: var(--space-2);
+  color: var(--ink);
+}
+
+.ct-overview__desc {
+  font-size: var(--size-small);
+  line-height: 1.45;
+  color: var(--ink-45);
+  text-wrap: pretty;
+}
+
+/* ---------- Compass hero — heading anchors four surrounding
+   surfaces (Barclay Woods opener). A homepage-style visual table of
+   contents, not another grid: one screen above, one below, one each
+   side of the centered heading/lead. ---------- */
+.ct-overview.ct-overview--compass {
+  display: block;
+  padding-block: clamp(0.5rem, 1.5vw, 1rem);
+}
+
+.ct-overview__compass {
+  display: grid;
+  gap: var(--space-5);
+  justify-items: center;
+  text-align: center;
+  max-width: 68rem;
+  margin-inline: auto;
+}
+
+.ct-overview__compass-center {
+  order: -1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  max-width: 32rem;
+}
+
+.ct-overview__compass-heading {
+  font-size: clamp(1.5rem, 2.3vw, 2rem);
+  font-weight: 500;
+  letter-spacing: var(--track-title);
+  line-height: var(--leading-title);
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.ct-overview__compass-lead {
+  font-size: var(--size-lead);
+  line-height: 1.5;
+  color: var(--ink-70);
+  text-wrap: pretty;
+}
+
+.ct-overview__compass-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: 24rem;
+}
+
+.ct-overview__compass-frame {
+  overflow: hidden;
+  background: var(--paper-sunk);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+}
+
+.ct-overview__compass-caption {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.4rem var(--space-2);
+}
+
+.ct-overview__compass-caption .label {
+  color: var(--ink);
+}
+
+.ct-overview__compass-desc {
+  font-size: var(--size-small);
+  color: var(--ink-45);
+  text-wrap: pretty;
+}
+
+@media (min-width: 860px) {
+  .ct-overview__compass {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-areas:
+      '.    top    .'
+      'left center right'
+      '.    bottom .';
+    align-items: center;
+    gap: clamp(var(--space-2), 1.2vw, var(--space-4));
+    max-width: 42rem;
+  }
+
+  .ct-overview__compass-center {
+    grid-area: center;
+    order: 0;
+  }
+
+  .ct-overview__compass-item {
+    max-width: none;
+  }
+
+  .ct-overview__compass-item[data-position='top'] {
+    grid-area: top;
+    justify-self: center;
+  }
+
+  .ct-overview__compass-item[data-position='left'] {
+    grid-area: left;
+    justify-self: end;
+  }
+
+  .ct-overview__compass-item[data-position='right'] {
+    grid-area: right;
+    justify-self: start;
+  }
+
+  .ct-overview__compass-item[data-position='bottom'] {
+    grid-area: bottom;
+    justify-self: center;
+  }
+
+  .ct-overview__compass-caption {
+    justify-content: flex-start;
+  }
+
+  .ct-overview__compass-item[data-position='left'] .ct-overview__compass-caption,
+  .ct-overview__compass-item[data-position='top'] .ct-overview__compass-caption,
+  .ct-overview__compass-item[data-position='bottom'] .ct-overview__compass-caption {
+    justify-content: center;
+  }
+}
+
+/* ============================================================
+   DIAGRAM — small consulting exhibits (layers / flow / map / tree)
+   Ink and hairlines only; mono labels. No colour fills.
+   ============================================================ */
+.ct-diagram-section {
+  border-top: 1px solid var(--rule);
+}
+
+.ct-diagram-section--bare {
+  padding-block: clamp(2rem, 4vw, 3.5rem);
+}
+
+.ct-diagram-section__body {
+  min-width: 0;
+}
+
+.ct-diagram {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 46rem;
+}
+
+.ct-diagram__note {
+  font-size: var(--size-small);
+  line-height: 1.5;
+  color: var(--ink-70);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule);
+  max-width: 52ch;
+  text-wrap: pretty;
+}
+
+/* --- layers --- */
+.ct-diagram__layers {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.ct-diagram__band {
+  border: 1px solid var(--rule);
+  background: var(--paper-sunk);
+  padding: var(--space-4) var(--space-4) var(--space-5);
+  position: relative;
+}
+
+.ct-diagram__band + .ct-diagram__band {
+  margin-top: 2.25rem;
+}
+
+/* down-arrow between bands */
+.ct-diagram__band + .ct-diagram__band::before {
+  content: '↓';
+  position: absolute;
+  top: -1.9rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--ink-45);
+}
+
+.ct-diagram__band-label {
+  color: var(--ink-45);
+  margin-bottom: var(--space-3);
+}
+
+.ct-diagram__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.ct-diagram__chips li {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--rule-strong);
+  padding: 0.3rem 0.6rem;
+  border-radius: 3px;
+}
+
+/* --- flow ---
+   Plain flow: a horizontal chevron row (wraps on narrow screens).
+   Numbered flow: a vertical numbered progression — no cramped text. */
+.ct-diagram__flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: var(--space-2) 0;
+}
+
+.ct-diagram__node {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.15rem;
+  flex: 1 1 8rem;
+  min-width: 0;
+  border: 1px solid var(--rule-strong);
+  background: var(--paper-sunk);
+  padding: var(--space-3);
+  position: relative;
+}
+
+.ct-diagram__node:not(:last-child) {
+  margin-right: 1.1rem;
+}
+
+.ct-diagram__node:not(:last-child)::after {
+  content: '→';
+  position: absolute;
+  right: -1.1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.1rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  color: var(--ink-45);
+}
+
+.ct-diagram__node-index {
+  color: var(--accent);
+}
+
+.ct-diagram__node-label {
+  font-size: var(--size-small);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.ct-diagram__node-sub {
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  color: var(--ink-45);
+}
+
+@media (max-width: 640px) {
+  .ct-diagram__flow {
+    flex-direction: column;
+  }
+  .ct-diagram__node:not(:last-child) {
+    margin-right: 0;
+    margin-bottom: 1.1rem;
+  }
+  .ct-diagram__node:not(:last-child)::after {
+    content: '↓';
+    right: 50%;
+    top: auto;
+    bottom: -1.1rem;
+    transform: translateX(50%);
+  }
+}
+
+/* Numbered flow → vertical progression on every width. */
+.ct-diagram__flow[data-numbered='true'] {
+  flex-direction: column;
+  gap: 0;
+}
+
+.ct-diagram__flow[data-numbered='true'] .ct-diagram__node {
+  flex-direction: row;
+  align-items: baseline;
+  gap: var(--space-3);
+  border: 0;
+  border-top: 1px solid var(--rule);
+  background: none;
+  padding: var(--space-4) 0;
+  margin: 0;
+}
+
+.ct-diagram__flow[data-numbered='true'] .ct-diagram__node:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.ct-diagram__flow[data-numbered='true'] .ct-diagram__node::after {
+  content: none;
+}
+
+.ct-diagram__flow[data-numbered='true'] .ct-diagram__node-index {
+  flex: 0 0 auto;
+}
+
+.ct-diagram__flow[data-numbered='true'] .ct-diagram__node-label {
+  font-size: var(--size-body);
+}
+
+/* --- map (source → owner) --- */
+.ct-diagram__map {
+  display: flex;
+  flex-direction: column;
+}
+
+.ct-diagram__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: baseline;
+  padding-block: var(--space-3);
+  border-top: 1px solid var(--rule);
+}
+
+.ct-diagram__row:first-child {
+  border-top: 0;
+}
+
+.ct-diagram__from {
+  text-align: right;
+  color: var(--ink-70);
+  font-size: var(--size-small);
+  text-wrap: balance;
+}
+
+.ct-diagram__to {
+  position: relative;
+  padding-left: 1.5rem;
+  font-weight: 500;
+  color: var(--ink);
+  font-size: var(--size-small);
+  text-wrap: balance;
+}
+
+.ct-diagram__to::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  font-family: var(--font-mono);
+  color: var(--ink-45);
+  font-weight: 400;
+}
+
+@media (max-width: 560px) {
+  .ct-diagram__row {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+  .ct-diagram__from {
+    text-align: left;
+  }
+  .ct-diagram__to {
+    padding-left: 1.5rem;
+  }
+}
+
+/* --- tree --- */
+.ct-diagram__tree {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.9;
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  background: var(--paper-sunk);
+  padding: var(--space-4) var(--space-5);
+  border-radius: 4px;
+}
+
+.ct-diagram__tree-root {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-45);
+  font-size: var(--size-label);
+  margin-bottom: var(--space-1);
+}
+
+.ct-diagram__tree ul {
+  display: flex;
+  flex-direction: column;
+}
+
+.ct-diagram__tree-branch {
+  color: var(--ink-45);
+  margin-right: 0.5rem;
+  white-space: pre;
+}
+
+/* ============================================================
+   PRINCIPLES — executive-summary slide
+   ============================================================ */
+.ct-principles__grid {
+  display: grid;
+  gap: 0;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 720px) {
+  .ct-principles__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(var(--space-5), 4vw, var(--space-7));
+  }
+}
+
+.ct-principles__item {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: baseline;
+  padding-block: var(--space-4);
+  border-top: 1px solid var(--rule);
+}
+
+.ct-principles__index {
+  color: var(--accent);
+}
+
+.ct-principles__text {
+  font-size: var(--size-body);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+/* ============================================================
+   TABS — a short interactive tab group.
+   'nodes': a compact consulting chain of claims, no media, one
+   expanded at a time. 'panel': a labelled strip over a media+
+   bullets panel (optionally with an embedded comparison).
+   ============================================================ */
+.ct-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding-block: clamp(2rem, 4vw, 3.5rem);
+  border-top: 1px solid var(--rule);
+}
+
+.ct-tabs__lead {
+  max-width: var(--measure);
+}
+
+.ct-tabs__body {
+  max-width: var(--measure);
+  color: var(--ink-70);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/* Wraps the tab row + panel only (not the heading/lead/cue above) so
+   an auto-advancing section can pause on hover/focus without the
+   handler also covering copy the visitor is just reading. */
+.ct-tabs__interactive {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* ---- Shared interaction cue row: a muted hint, an accent-colored
+   cue with a small directional arrow, and (when the demo auto-plays)
+   a toggle — all off to the side, never centered over the demo
+   itself. Used by both the tabs' tree variant and the context-model
+   exhibit, so the two auto-cycling demos on this page share one
+   interaction language. ---- */
+.ct-cue-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.ct-cue-text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.ct-cue-accent {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--size-label);
+  font-weight: 500;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.ct-cue-arrow {
+  margin-left: 0.5rem;
+  color: var(--accent);
+  opacity: 0.7;
+}
+
+/* ---- Auto-cycle toggle: "Auto trace / Auto preview [On/Off]" —
+   visually secondary (muted, small), never competing with the tab
+   buttons or tree nodes it governs. ---- */
+.ct-autotoggle {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+  background: none;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  padding: 0.3rem 0.65rem 0.3rem 0.7rem;
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+
+.ct-autotoggle:hover {
+  color: var(--ink);
+  border-color: var(--ink-45);
+}
+
+.ct-autotoggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.ct-autotoggle__switch {
+  position: relative;
+  width: 1.5rem;
+  height: 0.85rem;
+  border-radius: 999px;
+  background: var(--rule-strong);
+  transition: background var(--dur-fast) var(--ease);
+  flex: none;
+}
+
+.ct-autotoggle__knob {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: var(--paper);
+  transition: transform var(--dur-fast) var(--ease);
+}
+
+.ct-autotoggle[data-on] .ct-autotoggle__switch {
+  background: var(--accent);
+}
+
+.ct-autotoggle[data-on] .ct-autotoggle__knob {
+  transform: translateX(0.65rem);
+}
+
+.ct-autotoggle__state {
+  min-width: 1.4em;
+}
+
+.ct-tabs__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.ct-tabs__tab {
+  font-family: var(--font-mono);
+  font-size: var(--size-label);
+  font-weight: 450;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-45);
+  background: none;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  padding: 0.5rem 0.95rem;
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease);
+}
+
+.ct-tabs__tab:hover {
+  color: var(--ink);
+  border-color: var(--ink-45);
+}
+
+.ct-tabs__tab[data-active] {
+  color: var(--paper);
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.ct-tabs__tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* A restrained "these are clickable" cue: a small downward arrow above
+   each tab button, before the visitor has interacted with this group
+   (TabsSection.showTabArrows). Fades away for good after the first
+   click, so it never lingers as clutter once the pattern is learned. */
+.ct-tabs__list[data-pristine] .ct-tabs__tab {
+  padding-top: 1.1rem;
+}
+
+.ct-tabs__list[data-pristine] .ct-tabs__tab::before {
+  content: '↓';
+  display: block;
+  font-size: 0.7rem;
+  line-height: 1;
+  color: var(--ink-25);
+  margin-bottom: 0.3rem;
+}
+
+.ct-tabs__panel:focus-visible {
+  outline: none;
+}
+
+/* --- nodes variant: a restrained consulting chain --- */
+.ct-tabs--nodes .ct-tabs__list {
+  gap: 0;
+}
+
+@media (min-width: 640px) {
+  .ct-tabs--nodes .ct-tabs__list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.ct-tabs--nodes .ct-tabs__tab {
+  border-radius: 0;
+  border: 1px solid var(--rule-strong);
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .ct-tabs--nodes .ct-tabs__tab:not(:first-child) {
+    border-left: 0;
+  }
+}
+
+@media (max-width: 639px) {
+  .ct-tabs--nodes .ct-tabs__tab:not(:first-child) {
+    border-top: 0;
+  }
+}
+
+.ct-tabs--nodes .ct-tabs__tab[data-active] {
+  position: relative;
+}
+
+.ct-tabs__node-body {
+  padding-top: var(--space-4);
+  border-top: 2px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: var(--measure);
+}
+
+.ct-tabs__node-claim {
+  font-size: var(--size-lead);
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.ct-tabs__node-support {
+  color: var(--ink-70);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/* --- tree variant: a claim beside a small illustrative hierarchy --- */
+.ct-tabs__tree-body {
+  display: grid;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+@media (min-width: 720px) {
+  .ct-tabs__tree-body {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(var(--space-6), 4vw, var(--space-7));
+  }
+}
+
+.ct-tabs__tree-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.ct-tabs__support-line {
+  font-size: var(--size-small);
+  color: var(--ink-45);
+  text-wrap: pretty;
+}
+
+.ct-tabs__tree {
+  font-size: 0.8125rem;
+}
+
+.ct-tabs__closing {
+  margin-top: var(--space-2);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: var(--measure);
+}
+
+.ct-tabs__closing-label {
+  color: var(--ink-45);
+}
+
+.ct-tabs__closing p {
+  color: var(--ink-70);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.ct-tabs__closing p:last-child {
+  font-size: var(--size-lead);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* --- panel variant: media + bullets under a tab strip --- */
+.ct-tabs--panel .ct-tabs__panel-grid {
+  display: grid;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .ct-tabs--panel .ct-tabs__panel-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    gap: clamp(var(--space-6), 4vw, var(--space-8));
+  }
+}
+
+.ct-tabs__panel-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.ct-tabs__panel-text-body {
+  color: var(--ink-70);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.ct-tabs__compare {
+  margin-top: var(--space-2);
+}
+
+.ct-tabs__compare .ct-compare__col {
+  padding-top: var(--space-3);
+}
+
+.ct-tabs__footnote {
+  font-size: var(--size-small);
+  color: var(--ink-45);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule);
+  max-width: 52ch;
+  text-wrap: pretty;
+}
+
+/* --- operating-state strip: the consulting-case tab's compact
+   visual. A node ring (optionally routed through a center chip) or a
+   vertical knowledge flow with a protected-boundary divider. Chips
+   and hairlines only, sized to stay compact. --- */
+.ct-tabs__opstate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-1);
+}
+
+.ct-tabs__opstate-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2) var(--space-3);
+  width: 100%;
+}
+
+.ct-tabs__opstate-node {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ink-70);
+  background: var(--paper);
+  border: 1px solid var(--rule-strong);
+  border-left: 3px solid var(--tone-color, var(--rule-strong));
+  border-radius: 3px;
+  padding: 0.45rem 0.7rem;
+}
+
+.ct-tabs__opstate-node[data-tone='green'] {
+  --tone-color: var(--bw-green);
+}
+.ct-tabs__opstate-node[data-tone='rust'] {
+  --tone-color: var(--bw-rust);
+}
+.ct-tabs__opstate-node[data-tone='plum'] {
+  --tone-color: var(--bw-plum);
+}
+.ct-tabs__opstate-node[data-tone='brown'] {
+  --tone-color: var(--bw-brown);
+}
+
+/* scattered (Problem): each chip stands alone, dashed — fragmentation,
+   no shared bus, no center. */
+.ct-tabs__opstate[data-connection='scattered'] .ct-tabs__opstate-node {
+  border-style: dashed;
+  border-left-style: solid;
+}
+
+/* routed / orderly: a shared bus under the row, a tick down to the
+   center chip beneath it. */
+.ct-tabs__opstate[data-connection='routed'] .ct-tabs__opstate-row,
+.ct-tabs__opstate[data-connection='orderly'] .ct-tabs__opstate-row {
+  border-bottom: 1px solid var(--rule-strong);
+  padding-bottom: var(--space-3);
+}
+
+.ct-tabs__opstate-center {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--size-label);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+}
+
+.ct-tabs__opstate[data-connection='routed'] .ct-tabs__opstate-center {
+  position: relative;
+  margin-top: 0.9rem;
+  color: var(--ink-70);
+  background: var(--paper);
+  border: 1px dashed var(--ink-45);
+}
+
+.ct-tabs__opstate[data-connection='orderly'] .ct-tabs__opstate-center {
+  position: relative;
+  margin-top: 0.9rem;
+  color: var(--paper);
+  background: var(--bw-brown);
+  border: 1px solid var(--bw-brown);
+}
+
+.ct-tabs__opstate[data-connection='routed'] .ct-tabs__opstate-center::before,
+.ct-tabs__opstate[data-connection='orderly'] .ct-tabs__opstate-center::before {
+  content: '';
+  position: absolute;
+  top: -0.9rem;
+  left: 50%;
+  width: 1px;
+  height: 0.9rem;
+  background: var(--rule-strong);
+}
+
+/* AI tab: the center sits above a vertical knowledge flow. */
+.ct-tabs__opstate-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  margin-top: var(--space-3);
+}
+
+.ct-tabs__opstate-flow li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.ct-tabs__opstate-flow-arrow {
+  font-family: var(--font-mono);
+  color: var(--ink-25);
+  line-height: 1;
+}
+
+.ct-tabs__opstate-flow-step {
+  font-size: 0.8125rem;
+  color: var(--ink-70);
+  background: var(--paper);
+  border: 1px solid var(--rule-strong);
+  border-radius: 3px;
+  padding: 0.4rem 0.75rem;
+}
+
+.ct-tabs__opstate-boundary {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  max-width: 30rem;
+}
+
+.ct-tabs__opstate-boundary-divider {
+  width: 1px;
+  background: var(--rule-strong);
+}
+
+.ct-tabs__opstate-boundary-guidance,
+.ct-tabs__opstate-boundary-authority {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0.4rem 0.5rem;
+  border-radius: 3px;
+}
+
+.ct-tabs__opstate-boundary-guidance {
+  color: var(--bw-plum);
+  background: color-mix(in srgb, var(--bw-plum) 10%, var(--paper));
+}
+
+.ct-tabs__opstate-boundary-authority {
+  color: var(--paper);
+  background: var(--bw-brown);
+  font-weight: 500;
+}
+
+/* ============================================================
+   ARCHITECTURE SPLIT — the expanded object tree beside the
+   authoritative-owner map, read as one exhibit on desktop.
+   ============================================================ */
+.ct-arch {
+  padding-block: clamp(2rem, 4vw, 3.5rem);
+  border-top: 1px solid var(--rule);
+}
+
+.ct-arch__intro {
+  margin-bottom: var(--space-2);
+}
+
+/* The section's own larger interactive-exhibit title — marks this as
+   an explorer rather than a static diagram, distinct from (and larger
+   than) the small "NN / System model" eyebrow above it. */
+.ct-arch__heading {
+  margin-bottom: var(--space-2);
+}
+
+.ct-arch__lead {
+  margin-bottom: var(--space-5);
+}
+
+.ct-arch__grid {
+  display: grid;
+  gap: var(--space-6);
+}
+
+@media (min-width: 900px) {
+  .ct-arch__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(var(--space-6), 5vw, var(--space-8));
+    align-items: start;
+  }
+}
+
+.ct-arch-tree {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.85;
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  background: var(--paper-sunk);
+  padding: var(--space-4) var(--space-5);
+  border-radius: 4px;
+}
+
+.ct-arch-tree__root {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-45);
+  font-size: var(--size-label);
+  margin-bottom: var(--space-1);
+}
+
+.ct-arch-tree ul {
+  padding-left: 1.25rem;
+}
+
+.ct-arch-tree > ul {
+  padding-left: 0;
+}
+
+.ct-arch-tree__branch {
+  color: var(--ink-45);
+  margin-right: 0.5rem;
+  white-space: pre;
+}
+
+.ct-arch-tree__label {
+  color: var(--ink-70);
+}
+
+.ct-arch-tree > ul > li > .ct-arch-tree__label {
+  color: var(--ink);
+}
+
+/* Restrained semantic color: a branch's own top node carries
+   --tone-color (set inline from ArchTreeNode.tone); every descendant
+   label picks it up through ordinary custom-property inheritance, so
+   only the branch root needs to know its tone. Applied as a left-edge
+   marker on the branch's own line and a quiet tint on its label. */
+li[data-tone] > .ct-arch-tree__branch,
+.ct-arch-tree > .ct-arch-tree__root {
+  color: var(--tone-color, var(--ink-45));
+}
+
+li[data-tone] > .ct-arch-tree__label,
+li[data-tone] > .ct-arch-tree__label--linked {
+  color: color-mix(in srgb, var(--tone-color, var(--ink-70)) 75%, var(--ink-70));
+}
+
+/* A tree label or root that links to an authoritative-owner row —
+   a plain button visually, emphasized only on hover/focus/active. */
+.ct-arch-tree__label--linked,
+.ct-arch-tree__root--linked {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+
+.ct-arch-tree__root--linked {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: var(--size-label);
+  margin-bottom: var(--space-1);
+}
+
+.ct-arch-tree__label--linked:hover,
+.ct-arch-tree__label--linked:focus-visible,
+.ct-arch-tree__label--linked[data-active],
+.ct-arch-tree__root--linked:hover,
+.ct-arch-tree__root--linked:focus-visible,
+.ct-arch-tree__root--linked[data-active] {
+  background: color-mix(in srgb, var(--tone-color, var(--accent)) 16%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--tone-color, var(--accent)) 16%, transparent);
+}
+
+.ct-arch-tree__label--linked:focus-visible,
+.ct-arch-tree__root--linked:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.ct-arch-tree__note {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule-strong);
+  font-family: var(--font-sans);
+  font-size: var(--size-small);
+  line-height: 1.5;
+  color: var(--ink-70);
+  text-wrap: pretty;
+}
+
+.ct-arch-owners {
+  min-width: 0;
+}
+
+.ct-arch-owners__heading {
+  margin-bottom: var(--space-3);
+}
+
+.ct-arch-owners__note {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule);
+  font-size: var(--size-small);
+  line-height: 1.5;
+  color: var(--ink-70);
+  max-width: 48ch;
+  text-wrap: pretty;
+}
+
+/* A color marker beside an authoritative object, matching its tree
+   branch's tone — makes the correspondence visible without a legend. */
+.ct-diagram__row-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  margin-right: 0.45rem;
+  vertical-align: middle;
+}
+
+.ct-diagram__row[data-linked] {
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background var(--dur-fast) var(--ease);
+}
+
+.ct-diagram__row[data-linked]:hover,
+.ct-diagram__row[data-linked]:focus-visible,
+.ct-diagram__row[data-active] {
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+
+.ct-diagram__row[data-active] .ct-diagram__to {
+  color: var(--accent);
+}
+
+.ct-diagram__row[data-linked]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   SYSTEM MODEL — the closing two-direction interactive exhibit.
+   BARCLAY WOODS anchors the top; the four principles sit in a row
+   beneath it; the system objects sit in a row beneath that — a
+   compact hub → category → instance system map, not the four-box
+   compass cross this replaces. A faint tick above each row hints at
+   the hierarchy even before interaction; hover/focus/tap on either
+   row emphasizes the other side of that relationship. Plain CSS only
+   — no SVG, no canvas, no library, no physics.
+   ============================================================ */
+.ct-system-model {
+  padding-block: clamp(2.5rem, 5vw, 4.5rem);
+  border-top: 1px solid var(--rule);
+}
+
+/* The auto-play hint + toggle — off to the side of the exhibit, never
+   centered over it, same placement language as the tabs'/context-
+   model's own auto-cycle controls. */
+.ct-system-model__cue {
+  margin-top: var(--space-5);
+}
+
+.ct-system-model__body {
+  margin-top: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.ct-system-model__center {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--size-label);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  padding: 0.85rem 1.15rem;
+}
+
+.ct-system-model__principles,
+.ct-system-model__nodes {
+  position: relative;
+  width: 100%;
+  max-width: 46rem;
+  padding-top: var(--space-5);
+}
+
+/* A faint tick above each row — a baseline hint of hierarchy that's
+   visible before any interaction, without drawing a real per-edge
+   line for every principle/object pair. */
+.ct-system-model__principles::before,
+.ct-system-model__nodes::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: var(--space-5);
+  background: var(--rule-strong);
+}
+
+.ct-system-model__principles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3) var(--space-4);
+}
+
+/* A slight, non-uniform offset on alternating principles — reads as
+   a balanced cluster around the center rather than a rigid grid row. */
+@media (min-width: 640px) {
+  .ct-system-model__principles > button:nth-child(2n) {
+    transform: translateY(0.5rem);
+  }
+}
+
+.ct-system-model__principle {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  text-align: center;
+  color: var(--ink-70);
+  background: var(--paper);
+  border: 1px solid var(--rule-strong);
+  border-left: 3px solid var(--tone-color, var(--rule-strong));
+  border-radius: 6px;
+  padding: 0.6rem 0.9rem;
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
+}
+
+.ct-system-model__principle[data-state='related'] {
+  color: var(--ink);
+  border-color: var(--tone-color);
+  background: color-mix(in srgb, var(--tone-color) 12%, var(--paper));
+}
+
+.ct-system-model__principle[data-state='active'] {
+  color: var(--paper);
+  border-color: var(--tone-color);
+  background: var(--tone-color);
+}
+
+.ct-system-model__principle[data-state='dim'] {
+  opacity: 0.45;
+}
+
+.ct-system-model__principle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.ct-system-model__nodes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.ct-system-model__node {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
+}
+
+/* When a principle is active, its related objects borrow that
+   principle's own tone (carried down via --active-tone); when an
+   object itself is the active one, it gets a plain ink emphasis. */
+.ct-system-model__node[data-state='related'] {
+  color: var(--ink);
+  border-color: var(--active-tone, var(--accent));
+  background: color-mix(in srgb, var(--active-tone, var(--accent)) 12%, var(--paper));
+}
+
+.ct-system-model__node[data-state='active'] {
+  color: var(--ink);
+  border-color: var(--ink);
+  background: var(--paper-sunk);
+  font-weight: 500;
+}
+
+.ct-system-model__node[data-state='dim'] {
+  opacity: 0.4;
+}
+
+.ct-system-model__node:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.ct-system-model__explain {
+  min-height: 2.6em;
+  display: flex;
+  align-items: flex-start;
+  font-size: var(--size-small);
+  line-height: 1.5;
+  color: var(--ink-70);
+  text-align: center;
+  max-width: 34rem;
+  text-wrap: pretty;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+/* ============================================================
+   CONTEXT MODEL — "behind the system" exhibit.
+   A small clickable example hierarchy, the colour-matched context
+   bucket it makes relevant, and the "AI receives" panel derived from
+   the same chips. One restrained colour legend — selected / parent /
+   branch / excluded — repeats across all three panels so the
+   connection reads without the paragraph underneath. Two muted hues
+   plus the site's own accent; no bright fills, no library.
+   ============================================================ */
+.ct-context-model {
+  --ctx-selected: var(--accent);
+  --ctx-parent: #96793f;
+  --ctx-branch: #4c7a6b;
+  --ctx-excluded: var(--ink-25);
+  padding-block: clamp(2.5rem, 5vw, 4.5rem);
+  border-top: 1px solid var(--rule);
+}
+
+.ct-context-model__intro {
+  margin-bottom: var(--space-2);
+}
+
+.ct-context-model__lede {
+  margin-top: var(--space-4);
+  max-width: var(--measure);
+  color: var(--ink-70);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/* A quiet pulse beside the cue text — confirms the demo is live
+   without calling attention to itself. Dims while paused (hover or
+   Auto trace off). */
+.ct-context-model__live {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 0.55rem;
+  border-radius: 50%;
+  background: var(--ctx-selected);
+  opacity: 0.35;
+  vertical-align: middle;
+}
+
+.ct-context-model__live[data-playing] {
+  animation: ctx-live-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes ctx-live-pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-context-model__live[data-playing] {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+
+.ct-context-model__cue {
+  margin-top: var(--space-4);
+}
+
+.ct-context-model__demo {
+  margin-top: var(--space-5);
+  display: grid;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .ct-context-model__demo {
+    grid-template-columns: minmax(0, 1.1fr) 1.75rem minmax(0, 1fr) 1.75rem minmax(0, 0.85fr);
+  }
+}
+
+.ct-context-model__panel-label {
+  color: var(--ink-45);
+  margin-bottom: 0.2rem;
+}
+
+.ct-context-model__panel-sublabel {
+  font-size: 0.75rem;
+  color: var(--ink-25);
+  margin-bottom: var(--space-3);
+}
+
+.ct-context-model__tree,
+.ct-context-model__bucket,
+.ct-context-model__ai {
+  min-width: 0;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: var(--space-4) var(--space-5);
+}
+
+.ct-context-model__tree {
+  background: var(--paper-sunk);
+}
+
+.ct-context-model__tree-frame {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 2;
+}
+
+.ct-context-model__tree-frame ul {
+  padding-left: 1.25rem;
+}
+
+.ct-context-model__branch {
+  color: var(--ink-25);
+  opacity: 0.6;
+  margin-right: 0.4rem;
+  white-space: pre;
+  transition: color var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
+}
+
+.ct-context-model__branch[data-state='selected'],
+.ct-context-model__branch[data-state='parent'] {
+  color: var(--ctx-parent);
+  opacity: 1;
+}
+
+.ct-context-model__branch[data-state='branch'] {
+  color: var(--ctx-branch);
+  opacity: 1;
+}
+
+.ct-context-model__node {
+  font-family: var(--font-mono);
+  font-size: inherit;
+  text-align: left;
+  color: var(--ink-25);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  padding: 0.05rem 0;
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+
+.ct-context-model__node:hover {
+  color: var(--ink-70);
+}
+
+.ct-context-model__node:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.ct-context-model__node--root {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: var(--size-label);
+  margin-bottom: var(--space-1);
+}
+
+.ct-context-model__node[data-state='parent'] {
+  color: var(--ctx-parent);
+}
+
+.ct-context-model__node[data-state='branch'] {
+  color: var(--ctx-branch);
+}
+
+.ct-context-model__node[data-state='selected'] {
+  color: var(--ctx-selected);
+  font-weight: 500;
+  border-bottom-color: var(--ctx-selected);
+}
+
+.ct-context-model__flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-family: var(--font-mono);
+  color: var(--ink-45);
+  font-size: 1.05rem;
+}
+
+/* Re-keyed on the active node (like the chips/AI panel), so the
+   arrow itself visibly "moves" the data each time the selection
+   changes — a small, technical flash, not a bounce. */
+.ct-context-model__flow-glyph {
+  display: inline-block;
+  animation: ctx-flow-pulse var(--dur) var(--ease);
+}
+
+@keyframes ctx-flow-pulse {
+  from {
+    opacity: 0.25;
+    color: var(--ctx-selected);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.ct-context-model__flow--horizontal {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .ct-context-model__flow--horizontal {
+    display: flex;
+  }
+}
+
+.ct-context-model__bucket {
+  background: var(--paper);
+}
+
+.ct-context-model__ai {
+  background: var(--paper-sunk);
+}
+
+/* Chips — the bucket's colour-coded rows. Re-keyed on the active node
+   so the short fade below re-triggers on every click. */
+.ct-context-model__chips {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  animation: ctx-fade var(--dur) var(--ease);
+}
+
+@keyframes ctx-fade {
+  from {
+    opacity: 0.4;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.ct-context-model__chip {
+  --chip: var(--rule-strong);
+  border-left: 2px solid var(--chip);
+  padding-left: 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.ct-context-model__chip-label {
+  color: var(--chip);
+}
+
+.ct-context-model__chip-text {
+  font-size: var(--size-small);
+  line-height: 1.4;
+  color: var(--ink-70);
+  text-wrap: pretty;
+}
+
+.ct-context-model__chip[data-kind='selected'] {
+  --chip: var(--ctx-selected);
+}
+
+.ct-context-model__chip[data-kind='parent'] {
+  --chip: var(--ctx-parent);
+}
+
+.ct-context-model__chip[data-kind='branch'] {
+  --chip: var(--ctx-branch);
+}
+
+.ct-context-model__chip[data-kind='excluded'] {
+  --chip: var(--ctx-excluded);
+  opacity: 0.75;
+}
+
+/* AI panel — derived from the same chips, split into included/excluded. */
+.ct-context-model__ai-body {
+  animation: ctx-fade var(--dur) var(--ease);
+}
+
+.ct-context-model__ai-task {
+  font-size: var(--size-small);
+  color: var(--ink);
+  margin-bottom: var(--space-3);
+}
+
+.ct-context-model__ai-task .label {
+  margin-right: 0.4em;
+}
+
+.ct-context-model__ai-heading {
+  margin-top: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.ct-context-model__ai-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.ct-context-model__ai-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--ink-70);
+}
+
+.ct-context-model__ai-tag {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--ink-25);
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+}
+
+.ct-context-model__ai-list li[data-kind='selected'] .ct-context-model__ai-tag {
+  background: var(--ctx-selected);
+}
+
+.ct-context-model__ai-list li[data-kind='parent'] .ct-context-model__ai-tag {
+  background: var(--ctx-parent);
+}
+
+.ct-context-model__ai-list li[data-kind='branch'] .ct-context-model__ai-tag {
+  background: var(--ctx-branch);
+}
+
+.ct-context-model__ai-list li[data-kind='excluded'] {
+  color: var(--ink-45);
+}
+
+/* Takeaway — one unified block directly under the demo: label, one
+   line, three compact columns, one muted transition sentence. */
+.ct-context-model__note {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule);
+}
+
+/* Ties the demo directly to the explanation beneath it — this is
+   what you just watched happen on the backend, not a new chapter. */
+.ct-context-model__note-connector {
+  display: block;
+  width: fit-content;
+  margin: 0 auto var(--space-2);
+  font-family: var(--font-mono);
+  color: var(--ink-25);
+}
+
+.ct-context-model__note-label {
+  font-size: var(--size-body);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  margin-bottom: var(--space-2);
+  max-width: var(--measure);
+}
+
+.ct-context-model__note > p:not(.ct-context-model__note-label) {
+  color: var(--ink-70);
+  line-height: 1.55;
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+.ct-context-model__outcomes {
+  margin-top: var(--space-4);
+  display: grid;
+  gap: var(--space-2);
+}
+
+@media (min-width: 720px) {
+  .ct-context-model__outcomes {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(var(--space-4), 2.5vw, var(--space-5));
+  }
+}
+
+.ct-context-model__outcomes li {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+/* The three stages read left → right: each column's rail segment (its
+   cue label, a hairline, an arrow) runs on into the next column. */
+.ct-context-model__stage-label {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.ct-context-model__stage-index {
+  color: var(--ink);
+}
+
+.ct-context-model__stage-headline {
+  font-size: var(--size-small);
+  line-height: 1.5;
+  font-weight: 500;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.ct-context-model__stage-detail {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--ink-70);
+  text-wrap: pretty;
+}
+
+.ct-context-model__stage-cue {
+  display: none;
+}
+
+@media (min-width: 720px) {
+  .ct-context-model__stage-cue {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    /* pinned to the column's bottom so the three cues share one line
+       even when a neighbouring stage's text wraps */
+    margin-top: auto;
+    padding-top: var(--space-2);
+    font-size: 0.625rem;
+    /* reach across the column gap so the arrow lands just short of the next stage */
+    margin-right: calc(-1 * clamp(var(--space-4), 2.5vw, var(--space-5)) + var(--space-3));
+  }
+
+  .ct-context-model__stage-line {
+    flex: 1;
+    height: 1px;
+    background: var(--rule-strong);
+  }
+
+  .ct-context-model__stage-arrow {
+    margin-left: calc(-1 * var(--space-2));
+    color: var(--ink-45);
+    font-size: var(--size-label);
+    line-height: 1;
+  }
+}
+
+.ct-context-model__closing {
+  margin-top: var(--space-4);
+  font-size: var(--size-small);
+  color: var(--ink-45);
+  max-width: 52ch;
+  text-wrap: pretty;
+}
+
+/* ============================================================
+   CONCEPT MOCKUP — the FUTURE BUILDS section's three application
+   visuals. Plain HTML/CSS panels, each its own shape (a pipeline, a
+   branching map, a study workspace) with its own restrained accent
+   color — so the three read as distinct products built on the same
+   architecture, not one diagram with swapped labels. A repeated
+   "structured context" marker, tinted to match, is the one shared
+   tell that they run on the same underlying system.
+   ============================================================ */
+.ct-concept {
+  --tone-color: var(--accent);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  /* All three mockups are built to the same natural height, so
+     switching between them (by hand or on the auto preview) doesn't
+     shift the page; min-height (rather than a hard height) keeps
+     that guarantee without clipping content on narrower screens. */
+  min-height: 24rem;
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--tone-color);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--tone-color) 5%, var(--paper-sunk));
+  padding: var(--space-5);
+  overflow: hidden;
+}
+
+.ct-concept--apps {
+  --tone-color: var(--nb-apps);
+}
+.ct-concept--consulting {
+  --tone-color: var(--nb-consulting);
+}
+.ct-concept--study {
+  --tone-color: var(--nb-study);
+}
+
+.ct-concept__header {
+  flex: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+/* The faint tree glyph every mockup carries — the same shape
+   regardless of which application is showing, so it reads as the
+   one blueprint underneath three different interfaces. */
+.ct-concept__blueprint {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  opacity: 0.55;
+}
+
+.ct-concept__blueprint-tree {
+  stroke: var(--ink-45);
+  stroke-width: 1.25;
+  fill: var(--ink-45);
+}
+
+.ct-concept__blueprint-label {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+}
+
+.ct-concept__marker {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+}
+
+.ct-concept__marker-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--tone-color);
+}
+
+.ct-concept__body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.ct-concept__tag {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.01em;
+  color: var(--ink-45);
+}
+
+.ct-concept__card {
+  border: 1px solid var(--rule-strong);
+  background: var(--paper);
+  border-radius: 4px;
+  padding: var(--space-2) var(--space-3);
+  font-size: 0.8125rem;
+  color: var(--ink-70);
+}
+
+.ct-concept__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.ct-concept__row span {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-70);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0.3rem 0.55rem;
+}
+
+/* --- apps: requirements (left) tracked through to implementation
+   stages (right), one connecting tick per row --- */
+.ct-concept--apps .ct-concept__body {
+  align-items: stretch;
+}
+
+.ct-concept__workspace {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 2rem minmax(0, 1fr);
+  align-items: center;
+  row-gap: var(--space-3);
+  column-gap: 0.5rem;
+}
+
+.ct-concept__ws-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--rule-strong);
+}
+
+.ct-concept__ws-label--output {
+  text-align: right;
+}
+
+.ct-concept__ws-req {
+  font-size: 0.8125rem;
+  color: var(--ink-70);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0.35rem 0.6rem;
+}
+
+.ct-concept__ws-link {
+  display: block;
+  height: 1px;
+  background: linear-gradient(to right, var(--rule-strong), var(--tone-color));
+  position: relative;
+}
+
+.ct-concept__ws-link::after {
+  content: '›';
+  position: absolute;
+  right: -0.15rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--tone-color);
+  font-family: var(--font-mono);
+}
+
+.ct-concept__stage {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-45);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0.35rem 0.6rem;
+}
+
+.ct-concept__stage[data-state='done'] {
+  color: var(--ink-70);
+  border-color: var(--rule-strong);
+}
+
+.ct-concept__stage[data-state='active'] {
+  color: var(--paper);
+  background: var(--tone-color);
+  border-color: var(--tone-color);
+  font-weight: 500;
+}
+
+.ct-concept__stage[data-state='pending'] {
+  color: var(--ink-25);
+  border-style: dashed;
+}
+
+/* --- consulting: a branching map, problem to recommendation --- */
+.ct-concept--consulting .ct-concept__body {
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ct-concept__map {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.ct-concept__map-node {
+  font-size: 0.8125rem;
+  border-radius: 4px;
+  padding: 0.4rem 0.85rem;
+}
+
+.ct-concept__map-node--root {
+  color: var(--tone-color);
+  background: color-mix(in srgb, var(--tone-color) 10%, var(--paper));
+  border: 1px solid var(--tone-color);
+}
+
+.ct-concept__map-node--result {
+  color: var(--paper);
+  background: var(--tone-color);
+  font-weight: 500;
+}
+
+.ct-concept__map-connector {
+  width: 1px;
+  height: var(--space-3);
+  background: var(--rule-strong);
+}
+
+.ct-concept__map-branches {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+  padding-block: var(--space-2);
+  border-block: 1px solid var(--rule-strong);
+}
+
+.ct-concept__map-branches span {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-70);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0.3rem 0.55rem;
+}
+
+/* Evidence tier — muted relative to the drivers above it, so the map
+   reads top-to-bottom as problem → drivers → evidence → recommendation. */
+.ct-concept__map-branches--evidence {
+  border-block-color: var(--rule);
+  padding-block: 0.3rem;
+}
+
+.ct-concept__map-branches--evidence span {
+  color: var(--ink-45);
+  border-style: dashed;
+}
+
+/* --- study: course path, unit nav, and a concept card with a
+   mastery/review readout --- */
+.ct-concept__course {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.ct-concept__course-path {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--ink-45);
+}
+
+.ct-concept__course-path [data-active] {
+  color: var(--tone-color);
+  font-weight: 500;
+}
+
+.ct-concept__course-sep {
+  color: var(--ink-25);
+}
+
+.ct-concept__course-grid {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.ct-concept__mastery-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: 0.2rem;
+}
+
+.ct-concept__mastery-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--ink-45);
+}
+
+.ct-concept--study .ct-concept__sidebar {
+  flex: 0 0 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: 0.2rem;
+}
+
+.ct-concept--study .ct-concept__sidebar span {
+  font-size: 0.75rem;
+  color: var(--ink-45);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--rule);
+}
+
+.ct-concept--study .ct-concept__sidebar span[data-active] {
+  color: var(--tone-color);
+  border-bottom-color: var(--tone-color);
+  font-weight: 500;
+}
+
+.ct-concept--study .ct-concept__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.ct-concept--study .ct-concept__card--concept {
+  border-color: var(--tone-color);
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.ct-concept__mastery {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.ct-concept__mastery span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--rule-strong);
+}
+
+.ct-concept__mastery span[data-filled] {
+  background: var(--tone-color);
+}
+
+@media (max-width: 640px) {
+  .ct-concept__body {
+    flex-direction: column;
+  }
+  .ct-concept--apps .ct-concept__body {
+    align-items: stretch;
+  }
+  .ct-concept--study .ct-concept__sidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .ct-concept--study .ct-concept__sidebar span {
+    border-bottom: 0;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 0.25rem 0.5rem;
+  }
+  .ct-concept--study .ct-concept__course-grid {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .ct-concept {
+    padding: var(--space-4);
+    min-height: 0;
+  }
+  .ct-concept__blueprint-label {
+    display: none;
+  }
+  /* The requirements/output pairing collapses to two stacked lists —
+     the connecting ticks only make sense as a horizontal pairing. */
+  .ct-concept__workspace {
+    grid-template-columns: 1fr;
+    row-gap: 0.4rem;
+  }
+  .ct-concept__ws-link {
+    display: none;
+  }
+  .ct-concept__ws-label--output {
+    text-align: left;
+    margin-top: var(--space-2);
+  }
+  .ct-concept__stage {
+    text-align: left;
+  }
+}
+
+/* ============================================================
+   NOTEBOOK case study — media framing
+   The Notebook screen captures are cropped to the application
+   canvas (no browser chrome, no black surround). They sit on the
+   app's own warm canvas colour with a hairline edge so a screen
+   capture reads as an intentional framed figure, not a pasted
+   rectangle. Scoped to this page; no other case study is touched.
+   ============================================================ */
+.cs-notebook {
+  --nb-canvas: #f4f2e6; /* the Notebook workspace background */
+  /* One restrained accent per "future builds" concept (§ Future
+     builds), so the three mini-application mockups and their tab
+     controls read as distinct products, not one diagram re-labelled. */
+  --nb-apps: #1d5c86;
+  --nb-consulting: #c1571c;
+  --nb-study: #3f7a5c;
+}
+
+.cs-notebook .mfig__frame {
+  background: var(--nb-canvas);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+}
+
+/* The at-a-glance overview thumbnails sit on the same warm Notebook canvas
+   as the video figures, so the cropped screenshots read as one set. */
+.cs-notebook .ct-overview__frame {
+  background: var(--nb-canvas);
+}
+
+/* ============================================================
+   BARCLAY WOODS case study — media framing + rhythm
+   The recordings and screenshots are cropped to the application
+   (no browser chrome, no black surround). They sit framed on the
+   app's own warm surface at evidence size — never full-bleed — so
+   the page reads as a consulting exhibit, not a product demo.
+   Scoped to this page; no other case study is touched.
+   ============================================================ */
+.cs-barclay {
+  --bw-canvas: #f3efe6; /* the Barclay Woods app surface */
+  /* The product's own restrained palette — used only for the small
+     amount of new semantic color requested on this page (operating-
+     state strip, sequence cue chips, architecture tree/owners tones,
+     the closing system model). Never a large fill, always a border,
+     edge marker, dot or light tint. */
+  --bw-green: #55694a;
+  --bw-rust: #a35a34;
+  --bw-plum: #6b4a5c;
+  --bw-brown: #4a3826;
+  --bw-slate: #5b6470;
+}
+
+/* No project-hero masthead on this page — "Platform at a glance" is
+   the first content under the global nav, so it takes over the
+   hero's top breathing room and drops the section-divider hairline
+   that would otherwise sit directly under the sticky nav. */
+.cs-barclay .project-body > .ct-overview:first-child {
+  border-top: 0;
+  padding-top: clamp(2rem, 4.5vw, 3.5rem);
+}
+
+.cs-barclay .mfig__frame,
+.cs-barclay .ct-mediatext__media .mfig__frame,
+.cs-barclay .ct-overview__frame {
+  background: var(--bw-canvas);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+}
+
+/* The base grid forces every tile into a fixed 3:2 box, which crops
+   into the sidebar's left edge on stills whose real aspect isn't 3:2
+   (all five Barclay captures are ~1.56–1.58). Let each tile take its
+   own image's aspect (already set per-file in barclay.ts) instead. */
+.cs-barclay .ct-overview__frame {
+  aspect-ratio: auto;
+}
+
+/* Hold media to evidence size — roughly the height of the text block
+   it sits beside (a heading, a few bullets), not a dominant showpiece.
+   inset stays as-is (32rem). */
+.cs-barclay .mfig:not([data-scale='inset']) {
+  align-items: flex-start;
+}
+.cs-barclay .mfig:not([data-scale='inset']) .mfig__frame {
+  max-width: 28rem;
+}
+.cs-barclay .mfig[data-scale='wide'] {
+  margin-inline: 0;
+}
+.cs-barclay .mfig[data-scale='wide'] .mfig__frame {
+  max-width: 52rem;
+}
+.cs-barclay .mfig[data-scale='full'] {
+  margin-inline: 0;
+}
+.cs-barclay .mfig[data-scale='full'] .mfig__frame {
+  max-width: 52rem;
+}
+
+/* media+text (calendar / chat / payments): the visual is evidence
+   beside the explanation, not the dominant element — balanced columns,
+   top-aligned, and the frame itself capped well below "fills the
+   column" so its rendered height lands close to the accompanying
+   text block's own height instead of running on far past it. */
+.cs-barclay .ct-mediatext {
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .cs-barclay .ct-mediatext,
+  .cs-barclay .ct-mediatext[data-side='left'] {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.cs-barclay .ct-mediatext__media .mfig__frame {
+  max-width: 29rem;
+}
+
+/* Denser vertical rhythm — the page has to skim in under a minute. */
+.cs-barclay .text-section,
+.cs-barclay .ct-diagram-section,
+.cs-barclay .ct-sequence,
+.cs-barclay .ct-mediatext,
+.cs-barclay .ct-overview,
+.cs-barclay .ct-statement--bare,
+.cs-barclay .ct-tabs,
+.cs-barclay .ct-arch,
+.cs-barclay .ct-system-model {
+  padding-block: clamp(2rem, 3.6vw, 3.25rem);
+}
+
+/* Side-by-side steps (ticket workflow, household setup): text and its
+   evidence read as one balanced unit — the media frame keeps the page
+   default cap (above) instead of stretching to fill its column, and
+   the column itself is rebalanced so that cap doesn't leave a dead
+   gap beside a now-smaller frame. */
+@media (min-width: 800px) {
+  .cs-barclay [data-step-layout='side'] .ct-sequence__content {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+/* Keep the side-by-side figures beside the text, not dominating it. */
+@media (min-width: 900px) {
+  .cs-notebook .ct-mediatext {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
+  }
+
+  /* The core-interaction section is the page's highlight — let the
+     live-build video run wider than the default media+text ratio. */
+  .cs-notebook .ct-mediatext[data-emphasis='media'] {
+    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.2fr);
+  }
+}
+
+/* The opening hook: "A live build, not a chatbot" reads as a kicker
+   above the headline, not a label under it — the one place on the
+   page where the small tag leads. Scoped to the first media+text
+   section only; every later section keeps the heading-first order. */
+.cs-notebook .ct-mediatext:first-of-type .ct-mediatext__text > *:nth-child(1) {
+  order: 2;
+}
+.cs-notebook .ct-mediatext:first-of-type .ct-mediatext__text > *:nth-child(2) {
+  order: 1;
+  margin-top: 0;
+}
+.cs-notebook .ct-mediatext:first-of-type .ct-mediatext__text > *:nth-child(3) {
+  order: 3;
+}
+/* Targeted by class, not position, so it always lands last regardless
+   of how many body paragraphs precede it. */
+.cs-notebook .ct-mediatext:first-of-type .ct-mediatext__text > .ct-mediatext__compare {
+  order: 4;
+}
+
+/* The opener sits directly under the minimal hero and must read as
+   one continuous opening beat, not a title followed by a new section
+   after a gap — drop the section divider/top padding for this one
+   instance only. Every later section keeps its own divider. */
+.cs-notebook .project-body > .ct-mediatext:first-child {
+  border-top: 0;
+  padding-top: clamp(0.75rem, 1.5vw, 1.25rem);
+  /* The shared .ct-mediatext grid vertically centres its two columns —
+     fine when they're close in height, but the opening copy is much
+     shorter than the video, so centring stranded it halfway down a
+     tall empty row. Top-align this one row only. */
+  align-items: start;
+}
+
+/* The minimal hero (breadcrumb + title only) was leaving a large dead
+   band before the opening demonstration — this page's hook is the
+   product proof, not the masthead, so it should follow close behind.
+   The gap above it (between the global nav divider and "WORK / 02")
+   is cut the same way: still a real gap, just no longer a dead one. */
+.cs-notebook .project-hero {
+  padding-top: clamp(1.25rem, 3vw, 2.25rem);
+  padding-bottom: clamp(1rem, 2vw, 1.5rem);
+}
+
+/* The condensed "problem" framing folded into the opening hook's text
+   column — a short vertical list of rows (Manual / Pure chat /
+   Notebook), then the opportunity as a distinct closing row. Sized to
+   sit comfortably in the narrower text column beside the hero video,
+   not to reproduce the old three-column standalone section. */
+.ct-mediatext__compare {
+  margin-top: var(--space-1);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.ct-mediatext__compare-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ct-mediatext__compare-rows li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.6rem;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--rule);
+  font-size: var(--size-small);
+}
+
+.ct-mediatext__compare-rows li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.ct-mediatext__compare-eyebrow {
+  color: var(--ink-25);
+}
+
+.ct-mediatext__compare-label {
+  color: var(--ink-45);
+}
+
+.ct-mediatext__compare-text {
+  color: var(--ink-70);
+}
+
+.ct-mediatext__compare-opportunity {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--ink);
+}
+
+.ct-mediatext__compare-opportunity > .label {
+  color: var(--accent);
+}
+
+.ct-mediatext__compare-opportunity p {
+  margin-top: 0.25rem;
+  font-size: var(--size-small);
+  font-weight: 500;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.ct-mediatext__compare-tags {
+  margin-top: var(--space-2);
+  color: var(--ink-45);
+}
+
+/* "Visual reasoning becomes reusable structure" — give the text column
+   a little more width (so the intermediate screenshot + arrow have
+   somewhere to sit without stretching tall) and hold the two stacked
+   proof clips on the right to a size that keeps both columns reading
+   as one deliberate composition rather than one running on past the
+   other. */
+@media (min-width: 900px) {
+  .cs-notebook .ct-dual__grid {
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+  }
+}
+
+/* The proposed-package screenshot is the "before" half of a two-stage
+   transformation and needs to read at a size a visitor can actually
+   study — previously capped well below the accepted-table clips on
+   the right, which made it look like a secondary detail rather than
+   the first half of the sequence. */
+.cs-notebook .ct-dual__left .mfig[data-scale='inset'] .mfig__frame {
+  max-width: 44rem;
+}
+
+.cs-notebook .ct-dual__right .mfig__frame {
+  max-width: 34rem;
+}
+
+/* A plain directional arrow between the two states — no label under
+   it; the sequence (proposed package → accepted tables) reads on its
+   own. */
+.cs-notebook .ct-dual__arrow {
+  justify-content: center;
+  padding-block: var(--space-1);
+}
+
+.cs-notebook .ct-dual__arrow-glyph {
+  font-size: 1.25rem;
+  color: var(--ink-45);
+}
+
+/* "System at a glance" — the heading no longer reserves a 15rem label
+   column; the grid gets the width back and the frames read larger. */
+@media (min-width: 900px) {
+  .cs-notebook .ct-overview {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+}
+
+.cs-notebook .ct-overview .text-section__head {
+  max-width: none;
+}
+
+.cs-notebook .ct-overview__body {
+  gap: var(--space-4);
+}
+
+.cs-notebook .ct-overview__grid {
+  gap: var(--space-3) var(--space-4);
+}
+
+/* ---- Define / Structure tabs (variant "panel") — this variant is
+   also used by Barclay, so the stronger affordance is scoped to this
+   page only. A hover lift + shadow on top of the shared color/border
+   change, so the pair reads unmistakably as switchable controls. ---- */
+.cs-notebook .ct-tabs--panel .ct-tabs__tab {
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease),
+    box-shadow var(--dur-fast) var(--ease);
+}
+
+.cs-notebook .ct-tabs--panel .ct-tabs__tab:not([data-active]):hover {
+  background: var(--paper-sunk);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(25, 27, 30, 0.08);
+}
+
+.cs-notebook .ct-tabs--panel .ct-tabs__tab[data-active] {
+  box-shadow: 0 2px 6px rgba(25, 27, 30, 0.14);
+}
+
+/* A small understated instructional line above the tab row. */
+.cs-notebook .ct-tabs__hint {
+  color: var(--ink-25);
+  margin-top: calc(-1 * var(--space-1));
+}
+
+/* Define / Structure with `videoSequence`: the left column carries the
+   heading, copy, cue, tabs and the active stage's text; the clip sits
+   beside them from the top of the section instead of below the tab row.
+   Column widths match the panel grid this replaces (1fr : 1.2fr), so the
+   clip keeps its size. Below 900px the clip simply follows the text. */
+.cs-notebook .ct-tabs__split-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+.cs-notebook .ct-tabs--split .ct-tabs__panel-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 900px) {
+  .cs-notebook .ct-tabs--split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    column-gap: clamp(var(--space-6), 4vw, var(--space-8));
+    align-items: start;
+  }
+}
+
+/* ---- Future builds tabs (variant "tree") — Notebook-exclusive, kept
+   scoped for consistency. Each tab picks up its mockup's own accent
+   on selection, so the active control visibly matches the mini
+   application shown beneath it. ---- */
+/* Tighter rhythm from the intro down to the visualization, so the
+   closing note reads as the end of one connected exhibit. */
+.cs-notebook .ct-tabs--tree,
+.cs-notebook .ct-tabs--tree .ct-tabs__interactive {
+  gap: var(--space-4);
+}
+
+.cs-notebook .ct-tabs--tree .ct-tabs__tab {
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease),
+    box-shadow var(--dur-fast) var(--ease);
+}
+
+.cs-notebook .ct-tabs--tree .ct-tabs__tab:not([data-active]):hover {
+  background: var(--paper-sunk);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(25, 27, 30, 0.08);
+}
+
+.cs-notebook .ct-tabs--tree .ct-tabs__tab[data-tone='apps'] {
+  --tab-tone: var(--nb-apps);
+}
+.cs-notebook .ct-tabs--tree .ct-tabs__tab[data-tone='consulting'] {
+  --tab-tone: var(--nb-consulting);
+}
+.cs-notebook .ct-tabs--tree .ct-tabs__tab[data-tone='study'] {
+  --tab-tone: var(--nb-study);
+}
+
+.cs-notebook .ct-tabs--tree .ct-tabs__tab[data-active] {
+  background: var(--tab-tone, var(--ink));
+  border-color: var(--tab-tone, var(--ink));
+  box-shadow: 0 2px 6px rgba(25, 27, 30, 0.14);
+}
+
+/* "Current direction" reads as part of the same future-builds
+   exhibit, not a second standalone block underneath it. */
+.cs-notebook .ct-tabs--tree .ct-tabs__closing {
+  margin-top: var(--space-1);
+  padding-top: var(--space-4);
+}
+
+/* ============================================================
+   BARCLAY WOODS — page-scoped refinements
+   The shared section components (tabs / sequence / architecture-
+   split / system-model) are reused by other case studies, so every
+   rule here is scoped under .cs-barclay and touches nothing else.
+   ============================================================ */
+
+/* ---- Consulting case tabs (variant "nodes") — discoverability.
+   This variant is Barclay-exclusive, but the scope is kept for
+   consistency with the rest of this block. Inactive tabs get a
+   background response and a small arrow that appears on hover, on
+   top of the existing color/border change, so the row reads as
+   navigation rather than static section labels. ---- */
+.cs-barclay .ct-tabs--nodes .ct-tabs__tab {
+  position: relative;
+}
+
+.cs-barclay .ct-tabs--nodes .ct-tabs__tab:not([data-active]):hover {
+  background: var(--paper-sunk);
+}
+
+.cs-barclay .ct-tabs--nodes .ct-tabs__tab:not([data-active])::after {
+  content: '→';
+  display: inline-block;
+  margin-left: 0.5em;
+  opacity: 0;
+  transform: translateX(-3px);
+  transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+
+.cs-barclay .ct-tabs--nodes .ct-tabs__tab:not([data-active]):hover::after,
+.cs-barclay .ct-tabs--nodes .ct-tabs__tab:not([data-active]):focus-visible::after {
+  opacity: 0.55;
+  transform: translateX(0);
+}
+
+/* Center the active tab's content within the available page width —
+   the text block itself stays left-aligned for readability. */
+.cs-barclay .ct-tabs--nodes .ct-tabs__node-body {
+  margin-inline: auto;
+  max-width: 40rem;
+}
+
+/* ---- Tab section instructional hint — a small understated line
+   directly above any tab row (opt-in via TabsSection.tabsHint, used
+   by the knowledge-access tabs here). ---- */
+.cs-barclay .ct-tabs__hint {
+  margin-top: calc(-1 * var(--space-2));
+}
+
+/* Knowledge system / three levels of access (variant "panel") — this
+   variant is also used elsewhere, so the affordance boost is scoped
+   to this section's own tab buttons by id prefix rather than the
+   variant class. */
+.cs-barclay [id^='tabs-knowledge-tab-'] {
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease);
+}
+
+.cs-barclay [id^='tabs-knowledge-tab-']:not([data-active]):hover {
+  background: var(--paper-sunk);
+  border-color: var(--ink-45);
+  color: var(--ink);
+}
+
+/* ---- Sequence sections (Core operating workflow / Account + access
+   system) — both use stepLayout: 'side', which is also used on other
+   pages, so this is scoped to Barclay's own instances. The title no
+   longer reserves a permanent 15rem-wide column running the section's
+   full height; it moves into a compact upper-right line instead, so
+   the explanation + its media can start much further left and use
+   the freed-up width. ---- */
+@media (min-width: 900px) {
+  .cs-barclay .ct-sequence[data-step-layout='side'] {
+    grid-template-columns: 1fr;
+    /* The base sequence gap (up to 6rem) is a column gap for the old
+       heading|body split; as a row gap it stranded this heading far
+       above its content. */
+    row-gap: var(--space-4);
+  }
+
+  .cs-barclay .ct-sequence[data-step-layout='side'] .text-section__head {
+    width: fit-content;
+    max-width: 24rem;
+    margin-left: auto;
+    text-align: right;
+  }
+
+  .cs-barclay .ct-sequence[data-step-layout='side'] .ct-sequence__intro {
+    margin-top: var(--space-1);
+  }
+}
+
+/* ---- Knowledge system / information ownership (architecture-split)
+   — Barclay-exclusive, kept scoped for consistency. Strengthens the
+   existing hover link between a tree branch and its owners row: a
+   small instructional hint, a touch more motion on hover, and every
+   other linked row/branch receding slightly while one is active. ---- */
+.cs-barclay .ct-arch-owners__hint {
+  margin-top: calc(-1 * var(--space-2));
+  margin-bottom: var(--space-3);
+}
+
+.cs-barclay .ct-diagram__row[data-linked] {
+  transition: background var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease),
+    opacity var(--dur-fast) var(--ease);
+}
+
+.cs-barclay .ct-diagram__row[data-linked]:hover,
+.cs-barclay .ct-diagram__row[data-active] {
+  transform: translateX(3px);
+}
+
+.cs-barclay .ct-diagram__row[data-dimmed] {
+  opacity: 0.5;
+}
+
+.cs-barclay .ct-arch-tree__label--linked,
+.cs-barclay .ct-arch-tree__root--linked {
+  transition: background var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease),
+    opacity var(--dur-fast) var(--ease);
+}
+
+.cs-barclay .ct-arch-tree__label--linked[data-dimmed],
+.cs-barclay .ct-arch-tree__root--linked[data-dimmed] {
+  opacity: 0.5;
+}
+
+/* ---- Operating system underneath the interface (system-model) —
+   Barclay-exclusive, kept scoped for consistency. A restrained lift
+   on hover, on top of the existing click-to-pin state, so a node
+   reads as an interactive part of the diagram rather than a static
+   label — without turning it into a conventional bright button. ---- */
+.cs-barclay .ct-system-model__principle,
+.cs-barclay .ct-system-model__node {
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+
+.cs-barclay .ct-system-model__principle:hover,
+.cs-barclay .ct-system-model__node:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(25, 27, 30, 0.08);
+}
+
+/* ---- Sequence headings (Core operating workflow / Account + access
+   system), wide desktop: the heading block no longer takes its own row
+   above the content. It shares the first grid cell with the body and
+   sits at the top of the right-hand column — its left edge on the same
+   line as the step media below — level with the lead it belongs to.
+   The offset mirrors the step grid: half the body width, plus half of
+   (index column + gap) and half of the media column gap. ---- */
+@media (min-width: 1100px) {
+  .cs-barclay .ct-sequence[data-step-layout='side']:not(#ticket-pipeline) > .text-section__head {
+    grid-area: 1 / 1;
+    align-self: start;
+    justify-self: start;
+    margin-left: calc(50% + 2.125rem + clamp(var(--space-5), 3vw, var(--space-7)) / 2);
+    text-align: left;
+    z-index: 1;
+    /* Sits level with the middle of the intro on the left (lead →
+       principle → cue), not against the section's top edge. A relative
+       offset, so no row or column of the grid moves. */
+    position: relative;
+    top: 4.5rem;
+  }
+
+  .cs-barclay .ct-sequence[data-step-layout='side']:not(#ticket-pipeline) > .ct-sequence__body {
+    grid-area: 1 / 1;
+  }
+}
+
+/* ---- Platform at a glance — one tighter cluster. Same compass, same
+   content and image sizes; the descriptor line-height, the caption gap
+   and the row gaps were adding air between the four surfaces and the
+   centre title. ---- */
+.cs-barclay .ct-overview--compass .ct-overview__compass-item {
+  gap: var(--space-1);
+}
+
+.cs-barclay .ct-overview--compass .ct-overview__compass-desc {
+  line-height: 1.4;
+}
+
+.cs-barclay .ct-overview--compass {
+  padding-bottom: clamp(1rem, 2vw, 1.5rem);
+}
+
+@media (min-width: 860px) {
+  .cs-barclay .ct-overview__compass {
+    row-gap: var(--space-3);
+  }
+}
+
+/* ---- AUTO / MANUAL toggle (knowledge tabs, relationship explorer).
+   A quiet two-option pill in the same mono/hairline language as
+   .ct-autotoggle — the active option is a soft fill, so it never
+   competes with the ink-filled active tab beside it. ---- */
+.cs-barclay .ct-modetoggle {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+}
+
+.cs-barclay .ct-modetoggle__opt {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+  background: none;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.25rem 0.6rem;
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+}
+
+.cs-barclay .ct-modetoggle__opt:hover {
+  color: var(--ink);
+}
+
+.cs-barclay .ct-modetoggle__opt[data-active] {
+  color: var(--ink);
+  background: var(--paper-sunk);
+  box-shadow: inset 0 0 0 1px var(--rule-strong);
+}
+
+.cs-barclay .ct-modetoggle__opt:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* ---- Relationship explorer: the toggle sits right beside its
+   instruction (the lead's own bottom margin moves to the row). ---- */
+.cs-barclay .ct-arch__lead-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.cs-barclay .ct-arch__lead-row .ct-arch__lead {
+  margin-bottom: 0;
+}
+
+/* ---- Knowledge system tabs (ct-tabs--cycle) ----
+   1. The instruction reads as an interaction cue: accent colour, a soft
+      tint, and the section's single arrow, pointing at the tabs.
+   2. The three levels are a real tab strip: rectangular tabs standing on
+      a shared baseline, active tab filled. No arrows inside them. */
+.cs-barclay .ct-tabs__hint--cue {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  width: fit-content;
+  max-width: 100%;
+  color: var(--accent);
+  font-weight: 500;
+  padding: 0.35rem 0.65rem;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--accent-soft) 55%, transparent);
+}
+
+.cs-barclay .ct-tabs--cycle .ct-tabs__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-2) var(--space-4);
+}
+
+.cs-barclay .ct-tabs--cycle .ct-tabs__bar .ct-tabs__list {
+  flex: 1 1 auto;
+  gap: var(--space-1);
+  border-bottom: 1px solid var(--rule-strong);
+}
+
+@media (min-width: 480px) {
+  .cs-barclay .ct-tabs--cycle .ct-tabs__bar .ct-tabs__list {
+    flex-wrap: nowrap;
+  }
+}
+
+.cs-barclay .ct-tabs--cycle .ct-tabs__tab {
+  flex: none;
+  white-space: nowrap;
+  border-width: 1px 1px 0;
+  border-radius: 6px 6px 0 0;
+  padding: 0.6rem 1rem;
+}
+
+.cs-barclay .ct-tabs--cycle .ct-tabs__bar .ct-modetoggle {
+  margin-bottom: 0.35rem;
+}
+
+/* The panel cross-fades as the tab (or the auto-cycle) changes. */
+.cs-barclay .ct-tabs--cycle .ct-tabs__panel-grid {
+  animation: bw-panel-in var(--dur) var(--ease) both;
+}
+
+@keyframes bw-panel-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Wide desktop: the media rises to the top of the tab row instead of
+   starting below it. The interactive block becomes a two-column grid —
+   tab bar (row 1, left), panel text (row 2, left), media (both rows,
+   right) — and the panel wrappers hand their children up to it via
+   subgrid, so the alignment holds however the bar wraps. Column and row
+   sizes match the existing panel grid (1fr : 1.2fr). */
+@media (min-width: 900px) {
+  @supports (grid-template-columns: subgrid) {
+    .cs-barclay .ct-tabs--cycle .ct-tabs__interactive {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+      column-gap: clamp(var(--space-6), 4vw, var(--space-8));
+      row-gap: var(--space-4);
+      align-items: start;
+    }
+
+    .cs-barclay .ct-tabs--cycle .ct-tabs__bar {
+      grid-column: 1;
+      grid-row: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cs-barclay .ct-tabs--cycle .ct-tabs__panel,
+    .cs-barclay .ct-tabs--cycle .ct-tabs__panel-grid {
+      grid-column: 1 / -1;
+      grid-row: 1 / span 2;
+      display: grid;
+      grid-template-columns: subgrid;
+      grid-template-rows: subgrid;
+      row-gap: var(--space-4);
+    }
+
+    .cs-barclay .ct-tabs--cycle .ct-tabs__panel-text {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .cs-barclay .ct-tabs--cycle .ct-tabs__panel-grid > .mfig {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      margin-top: 0;
+    }
+  }
+}
+
+/* ---- Platform at a glance — wider composition. The three-column
+   compass was a fixed 42rem with equal columns, which left the centre
+   title ~13rem wide (four lines). Same five parts, same type and media;
+   the centre column now takes twice a side column's width and the whole
+   cluster spans 66rem. The top and bottom surfaces are half the centre
+   column — the same width as the side surfaces — so they stay centred
+   over/under the message. ---- */
+@media (min-width: 860px) {
+  .cs-barclay .ct-overview__compass {
+    max-width: 66rem;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr) minmax(0, 0.8fr);
+    column-gap: clamp(var(--space-5), 3vw, var(--space-7));
+  }
+
+  .cs-barclay .ct-overview__compass-center {
+    max-width: none;
+  }
+
+  .cs-barclay .ct-overview__compass-item[data-position='top'],
+  .cs-barclay .ct-overview__compass-item[data-position='bottom'] {
+    width: 50%;
+  }
+
+  /* The right-hand item's label was flex-start while the other three
+     captions are centred — centre it on its screenshot's axis. */
+  .cs-barclay .ct-overview__compass-item[data-position='right'] .ct-overview__compass-caption {
+    justify-content: center;
+  }
+}
+
+/* ---- Core operating workflow — one header row. On desktop the lead
+   ("One ticket moves through…") and the section heading share row 1 of
+   the section grid, vertically centred on each other; the heading's
+   left edge is the step-media column's left edge (half the width plus
+   half of index column + gap, as for the other side-layout sequences).
+   The body's children become grid items so the lead can pair with the
+   heading; the body's own flex gap is carried by the row gap. ---- */
+@media (min-width: 900px) {
+  .cs-barclay #ticket-pipeline[data-step-layout='side'] {
+    grid-template-columns: calc(50% + 2.125rem + clamp(var(--space-5), 3vw, var(--space-7)) / 2) minmax(0, 1fr);
+    column-gap: 0;
+    row-gap: var(--space-6);
+  }
+
+  .cs-barclay #ticket-pipeline > .ct-sequence__body {
+    display: contents;
+  }
+
+  .cs-barclay #ticket-pipeline > .ct-sequence__body > * {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+
+  .cs-barclay #ticket-pipeline > .ct-sequence__body > .ct-sequence__lead {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+  }
+
+  .cs-barclay #ticket-pipeline > .text-section__head {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    justify-self: start;
+    margin-left: 0;
+    text-align: left;
+    /* Moved down to sit opposite the paragraph and process cue on the
+       left instead of level with the lead alone. A relative offset, so
+       row 1 (and everything under it) keeps its size. */
+    position: relative;
+    top: 5.5rem;
+  }
+
+  /* the header row sits a little closer to the copy under it */
+  .cs-barclay #ticket-pipeline > .ct-sequence__body > .ct-sequence__lead,
+  .cs-barclay #ticket-pipeline > .text-section__head {
+    margin-bottom: calc(-1 * var(--space-2));
+  }
+}

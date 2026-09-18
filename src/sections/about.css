@@ -1,0 +1,50 @@
+.about {
+  display: grid;
+  gap: var(--space-5);
+  padding-block: clamp(2rem, 4vw, 3.25rem) clamp(3rem, 6vw, 5rem);
+}
+
+.about::before {
+  content: '';
+  grid-column: 1 / -1;
+  height: 1px;
+  background: var(--rule);
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+@media (min-width: 900px) {
+  .about {
+    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+    column-gap: clamp(var(--space-6), 6vw, var(--space-9));
+  }
+}
+
+.about__heading {
+  font-size: var(--size-subtitle);
+  font-weight: 500;
+  letter-spacing: var(--track-title);
+}
+
+.about__body {
+  max-width: var(--measure);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-5);
+  font-size: var(--size-lead);
+  line-height: 1.55;
+  color: var(--ink-70);
+  text-wrap: pretty;
+}
+
+.about__resume {
+  font-size: var(--size-small);
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule-strong);
+  padding-bottom: 2px;
+  transition: border-color var(--dur-fast) var(--ease);
+}
+
+.about__resume:hover {
+  border-bottom-color: var(--accent);
+}

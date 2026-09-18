@@ -1,0 +1,78 @@
+{
+  "project": "barclay-woods",
+  "title": "Barclay Woods",
+  "summary": "Role-based community operations platform: one shared platform giving Residents, Management, and Vendors role-specific experiences over a common object model.",
+  "mediaBasePath": "/portfolio/barclay-woods",
+  "pass": "asset-preparation-only",
+  "notes": [
+    "Source screenshots are attached to the working conversation but were not located on this machine; no image files were written.",
+    "Filenames below are assigned and reserved. Drop original full-resolution, uncropped, unedited exports into public/portfolio/barclay-woods/ under these names."
+  ],
+  "assets": [
+    {
+      "filename": "barclay-home.png",
+      "mediaType": "image/png",
+      "capture": "Home, Resident, full window, uncropped",
+      "caseStudyRole": "hero",
+      "demonstrates": "Single branded entry point with role-scoped navigation and the Resident/Management/Vendor context control present.",
+      "interpretation": "Establishes Barclay Woods as one product with one front door: the same platform that runs board operations and vendor service work presents the resident a calm editorial home surface, with navigation and capability already resolved to the current role.",
+      "status": "source-needed"
+    },
+    {
+      "filename": "barclay-community-chat.png",
+      "mediaType": "image/png",
+      "capture": "Community Chat, Management View, full window, uncropped",
+      "caseStudyRole": "role-based-platform (lead) + communication",
+      "demonstrates": "One communication surface under an explicit role context ('Viewing as Management' with a 'View as Resident' toggle), the global role switch, first-class Management announcement objects, pinning, and per-post authority actions (Edit / Unpin / Remove) beside resident-equivalent Appreciate / Reply.",
+      "interpretation": "The shared-platform / role-specific-experience model in a single frame: the same feed is the residents' notice board and management's announcement-and-moderation console; authority is capabilities layered on one object model, not a separate admin app.",
+      "status": "source-needed"
+    },
+    {
+      "filename": "barclay-operations.png",
+      "mediaType": "image/png",
+      "capture": "Ticket Queue -> Service Types, Management, full window, uncropped",
+      "caseStudyRole": "community-operations",
+      "demonstrates": "Management operations console: community-wide workflow mode (Booking Only vs. Completion and Billing), configurable Service Type catalog with per-type Estimate / Appointment / Final Approval flags, triage tabs, and the rule that each ticket snapshots its requirements at submission and is never rewritten in flight.",
+      "interpretation": "Separation of a configurable workflow engine from the work it governs: configuration changes apply to future tickets only; every open ticket carries an immutable snapshot of the rules in force when it was raised.",
+      "status": "source-needed"
+    },
+    {
+      "filename": "barclay-payments.png",
+      "mediaType": "image/png",
+      "capture": "Account -> Statement, Resident, full window, uncropped",
+      "caseStudyRole": "household-finances",
+      "demonstrates": "Household-scoped account (Unit 101 Household): current balance, due date, paid-to-date, Pay balance action, statement of open charges and payments received, with Payment history and Payment methods as sibling tabs.",
+      "interpretation": "Household-level financial visibility by resolving balance, due date, statement lines, payments received, and the payment action into one resident workflow, with the unit-owned charge as the single source of truth every view recalculates from.",
+      "status": "source-needed"
+    },
+    {
+      "filename": "barclay-calendar.png",
+      "mediaType": "image/png",
+      "capture": "Community Calendar, Resident, full window, uncropped",
+      "caseStudyRole": "community-coordination",
+      "demonstrates": "One calendar carrying operational events (landscaping, gutter cleaning, board meeting) alongside social events; Month / Week views plus a 'Coming Up' agenda; resident Create Event and Calendar / Journal / My Submissions tabs.",
+      "interpretation": "Community coordination as a governed workflow, not a shared calendar file: residents submit events into a board-approval queue, management publishes onto one timeline, everyone reads the same schedule through the view that suits them.",
+      "status": "source-needed"
+    },
+    {
+      "filename": "barclay-demo.mp4",
+      "mediaType": "video/mp4",
+      "capture": "Silent, looping, no audio track; ship barclay-demo-poster.jpg; target < ~8 MB, ~1600px wide",
+      "caseStudyRole": "live-implementation",
+      "demonstrates": "Intended: one workflow end to end, or a role switch changing the same surface's capabilities.",
+      "interpretation": "Intended: the platform behaving as one system in motion, a single workflow crossing role boundaries without leaving the product.",
+      "status": "source-unconfirmed",
+      "candidate": "~/Downloads/IMG_9031.MOV (unverified)"
+    }
+  ],
+  "reserved": [
+    {
+      "filename": "barclay-role-switching.png",
+      "reason": "No dedicated role-switch or Vendor-view screenshot was supplied. Assign only if a purpose-built capture is produced."
+    }
+  ],
+  "omitted": [
+    "Recent ~/Desktop captures from 2026-09-05..08 — belong to other projects (CS 1501, Notebook, MATLAB), not Barclay Woods.",
+    "Barclay Woods.html / 'Barclay Woods - Clickable Prototype.html' — prototypes, not media assets."
+  ]
+}

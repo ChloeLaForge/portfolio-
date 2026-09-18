@@ -1,0 +1,176 @@
+.media {
+  position: relative;
+  overflow: hidden;
+  background: var(--paper-sunk);
+  width: 100%;
+}
+
+.media img,
+.media video {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* --- Empty slot ---
+   Not a grey box. A ruled well with the exact filename it is
+   waiting for, so the site doubles as its own asset checklist. */
+.media--empty {
+  background:
+    linear-gradient(var(--rule), var(--rule)) 0 0 / 100% 1px no-repeat,
+    linear-gradient(var(--rule), var(--rule)) 0 100% / 100% 1px no-repeat,
+    linear-gradient(var(--rule), var(--rule)) 0 0 / 1px 100% no-repeat,
+    linear-gradient(var(--rule), var(--rule)) 100% 0 / 1px 100% no-repeat, var(--paper-sunk);
+  display: grid;
+  place-items: center;
+  padding: var(--space-5);
+}
+
+.media__slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.media__path {
+  font-family: var(--font-mono);
+  font-size: var(--size-label);
+  letter-spacing: 0.04em;
+  color: var(--ink-45);
+  background: var(--paper);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--rule);
+}
+
+.media__note {
+  font-size: 0.8125rem;
+  color: var(--ink-45);
+  max-width: 30ch;
+  line-height: 1.5;
+}
+
+/* --- Video control ---
+   Present but almost invisible until you go looking for it. */
+.media__toggle {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--size-label);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink);
+  background: rgba(251, 250, 248, 0.86);
+  backdrop-filter: saturate(1.2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--rule);
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease);
+}
+
+.media--video:hover .media__toggle,
+.media__toggle:focus-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (hover: none) {
+  .media__toggle {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- Compositions --- */
+
+.captioned {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.caption {
+  font-size: var(--size-small);
+  line-height: 1.55;
+  color: var(--ink-45);
+  max-width: 46ch;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule);
+}
+
+.caption strong {
+  display: block;
+  font-weight: 500;
+  color: var(--ink-70);
+}
+
+.media-grid {
+  display: grid;
+  gap: clamp(var(--space-4), 2vw, var(--space-6));
+}
+
+.media-grid[data-columns='2'] {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.media-grid[data-columns='3'] {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.media-grid[data-columns='4'] {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 900px) {
+  .media-grid[data-columns='4'] {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .media-grid[data-columns='2'],
+  .media-grid[data-columns='3'] {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Full bleed ---
+   Escapes the gutters and the page frame entirely. */
+/* Escapes the gutters rather than using 100vw, which would overflow
+   by the width of the scrollbar and fight the page frame. */
+.full-bleed {
+  margin-inline: calc(-1 * var(--gutter));
+}
+
+.full-bleed .caption {
+  margin: var(--space-4) auto 0;
+  padding-inline: var(--gutter);
+}
+
+/* --- Caption set beside the media --- */
+.captioned-aside {
+  display: grid;
+  gap: clamp(var(--space-4), 3vw, var(--space-7));
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .captioned-aside {
+    grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
+  }
+  .captioned-aside[data-side='left'] .captioned-aside__media {
+    order: 2;
+  }
+  .captioned-aside[data-side='left'] .captioned-aside__text {
+    order: 1;
+  }
+}
+
+.captioned-aside__text .caption {
+  padding-top: var(--space-3);
+}

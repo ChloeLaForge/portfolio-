@@ -1,0 +1,99 @@
+{
+  "project": "cs1501",
+  "title": "CS 1501",
+  "summary": "A University of Virginia course the author designed and teaches about building software with AI systems: turning an idea into a plan, giving AI the right context, and directing it while software is built. The course website and its in-page exercises are evidence of that teaching work.",
+  "mediaBasePath": "/portfolio/cs1501",
+  "pass": "asset-preparation-only",
+  "notes": [
+    "Source screenshots are attached to the working conversation as downscaled renders; writing them into public/ would recompress them, so no image files were written.",
+    "Filenames below are assigned and reserved. Drop original full-resolution, uncropped, unedited exports into public/portfolio/cs1501/ under these names.",
+    "The course application was not modified. The shipped Build Your AI Friend exercise (conversation -> generated image, five-message budget) supersedes the older chat-demo spec on file; the screenshots are the source of truth."
+  ],
+  "assets": [
+    {
+      "filename": "cs1501-home.png",
+      "mediaType": "image/png",
+      "capture": "Homepage, full browser window, uncropped",
+      "caseStudyRole": "hero",
+      "demonstrates": "The homepage composed as an arranged desk rather than a landing page: 'Welcome to CS 1501', a taped FIRST CLASS / September 1st card, a UVA pennant, a faint Rotunda drawing, and three sticky notes (Questions, Tell Me About You, Build Your AI Friend) that are the only navigation.",
+      "interpretation": "The course was given a front door before it met its students. Not a course-management shell: three physical notes stand in for a syllabus and each is a task the student can do now. Establishes the course as a designed environment and the author as someone who builds the software they teach.",
+      "status": "source-needed"
+    },
+    {
+      "filename": "cs1501-course-experience.png",
+      "mediaType": "image/png",
+      "capture": "Questions page, cards on the question side ('tap to flip'), full window, uncropped",
+      "caseStudyRole": "course-experience-outside-lms",
+      "demonstrates": "The FAQ rebuilt as a grid of physical index cards with real pre-class questions on the front ('Do I need to know how to code?', 'What are we going to build?', 'What tools will we use?') and a flip-to-reveal interaction; a persistent left margin lists the four course destinations.",
+      "interpretation": "Course information is something to handle and work through, not a document to scroll. Flipping to reveal makes the student commit to a guess before seeing the answer. Pair with cs1501-questions-back.png for the answered side.",
+      "status": "source-needed"
+    },
+    {
+      "filename": "cs1501-interactive-build.png",
+      "mediaType": "image/png",
+      "capture": "Build Your AI Friend, 'Now, build something together', Message 0 of 5, empty Your Creation panel, full window, uncropped",
+      "caseStudyRole": "interactive-exercise",
+      "demonstrates": "The two-part working surface: a lined-notebook conversation on the left, a Your Creation panel on the right, and a visible five-message budget ('you only have 5 messages, so think about what information might be useful'); the AI's opening turn asks what the student is picturing.",
+      "interpretation": "The message limit is the lesson, not a technical limit: scarcity forces the student to decide what context matters before spending a turn. Designing software around AI, with a server-side model call behind a deliberate interaction design.",
+      "status": "source-needed"
+    },
+    {
+      "filename": "cs1501-api-lesson.png",
+      "mediaType": "image/png",
+      "capture": "Build Your AI Friend interstitial, 'The choices you made above became instructions for your AI...', with Continue, full window, uncropped",
+      "caseStudyRole": "systems-ai-integration-teaching",
+      "demonstrates": "The exercise naming what just happened: 'You didn't change what the AI knows, but you did give it directions for how to communicate, respond, and work with you.' Delivered in the course's plain voice, in context, right after the student felt the effect.",
+      "interpretation": "Beginners get a precise mental model - what a model knows vs. what you instruct it to do - at the point they can attach it to an experience. Translating prompt/context layering in an AI feature into one sentence a non-programmer can hold.",
+      "pairing": "cs1501-ai-setup.png (setup worksheet + 'how the instructions we give AI can change the way it behaves and what it creates' + 'your AI will turn your conversation into an image')",
+      "alternate": "cs1501-api-diagram.png (standalone 'what an AI API is' graphic; confirm provenance and note off-brand styling)",
+      "status": "source-needed"
+    },
+    {
+      "filename": "cs1501-ai-systems.png",
+      "mediaType": "image/png",
+      "capture": "Build Your AI Friend, Message 5 of 5, Your Creation panel populated with a generated image, 'Your creation is ready' note visible, full window, uncropped",
+      "caseStudyRole": "conversation-to-built-artifact",
+      "demonstrates": "Both ends of the transition in one frame: the finished five-turn conversation on the left, the artifact it produced on the right (example run: a Yankees-themed stadium), and the debrief 'we'll explore different factors that influence output quality'.",
+      "interpretation": "Closes a loop beginners rarely see drawn: loose natural-language intent, developed over a constrained exchange, resolved by a model call into a concrete output, then framed as something whose quality has causes the course will study.",
+      "status": "source-needed"
+    },
+    {
+      "filename": "cs1501-demo.mp4",
+      "mediaType": "video/mp4",
+      "capture": "Silent, looping, no audio track; ship cs1501-demo-poster.jpg; target < ~8 MB, ~1600px wide",
+      "caseStudyRole": "live-walkthrough",
+      "demonstrates": "Intended: one pass through Build Your AI Friend end to end - pick what to create, give instructions, spend the five messages, watch the conversation resolve into an image.",
+      "interpretation": "Intended: the exercise as one small system in motion, from empty prompt to finished artifact, without leaving the page. Use only if motion shows what the stills cannot (message-budget pacing, the generation step).",
+      "status": "source-unconfirmed",
+      "candidate": "~/Desktop/Screen Recording 2026-09-04 at 2.08.33 PM.mov (unverified; no ffmpeg on this machine)"
+    }
+  ],
+  "reserved": [
+    {
+      "filename": "cs1501-questions-back.png",
+      "reason": "Pair for cs1501-course-experience.png - the same Questions cards flipped to their answers ('No coding experience needed', 'Mostly Claude, ChatGPT, and VS Code', 'How prompts and context shape what you get back'). Re-export from the running site."
+    },
+    {
+      "filename": "cs1501-questionnaire.png",
+      "reason": "Tell Me About You - the pre-class notebook-paper questionnaire (name, coding comfort, AI-for-coding experience, open responses) that feeds curriculum design and saves to Supabase with no login. Curriculum-design / pre-class-input beat. Candidate original located: ~/Desktop/Screenshot 2026-09-08 at 9.49.47 PM.png (clean full-res)."
+    },
+    {
+      "filename": "cs1501-ai-setup.png",
+      "reason": "Pair for cs1501-api-lesson.png - the Build an AI Friend intro and 'What do you want to create?' worksheet (House / Theme Park / Stadium / Outfit / Dream Room / Something Else) with the how-it-works copy describing the conversation-to-image pipeline."
+    },
+    {
+      "filename": "cs1501-api-diagram.png",
+      "reason": "Alternate for cs1501-api-lesson.png - standalone teaching graphic ('an AI API is a general-purpose brain you plug into an application: see / read / reason / write / decide / create'). Candidate located: ~/Desktop/Screenshot 2026-09-06 at 5.14.30 PM.png. Confirm it is course-authored and note that its visual style is not the course site's."
+    }
+  ],
+  "omitted": [
+    "Supplied screenshot of Build Your AI Friend at 'Message 0 of 5' with only the AI's first message and no right-panel context - redundant with cs1501-interactive-build.png, which shows the same state plus the Your Creation panel.",
+    "Recent ~/Desktop and ~/Downloads captures from other projects (Notebook, Barclay Woods, MATLAB) - not CS 1501.",
+    "Large ~/Desktop screen recordings from 2026-08-02 and 2026-08-15 (344 MB / 139 MB) - long unrelated captures, not demo clips.",
+    "The course-spec markdown files (00-course-welcome-website.md, 01..05-*.md) - background reading for this pass, not portfolio media; the shipped exercise has moved past the 04 chat-demo spec."
+  ],
+  "checkBeforePublishing": [
+    "Questions contact card shows instructor email rca8rw@virginia.edu, not the author's computing ID - confirm intended instructor of record vs. a value to update.",
+    "Re-export cs1501-home.png, cs1501-course-experience.png, cs1501-interactive-build.png, cs1501-api-lesson.png and cs1501-ai-systems.png as full-resolution, uncropped, unedited window captures from the running course site."
+  ]
+}
