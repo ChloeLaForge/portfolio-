@@ -6,6 +6,7 @@ import Notebook from './pages/Notebook';
 import BarclayWoods from './pages/BarclayWoods';
 import Cs1501 from './pages/Cs1501';
 import NotFound from './pages/NotFound';
+import { PortfolioAssistant } from './assistant/PortfolioAssistant';
 
 export default function App() {
   const location = useLocation();
@@ -27,6 +28,7 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
+      <PortfolioAssistant />
     </div>
   );
 }

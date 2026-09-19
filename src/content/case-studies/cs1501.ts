@@ -399,8 +399,7 @@ export const cs1501Slides: CourseSlide[] = [
   {
     media: slide('slide-1', 'Title slide: "CS 1501 — Coding with AI Systems," a welcome note, and a UVA Rotunda line drawing over a blueprint grid, framing Fall 2026 Week 01.'),
     bullets: [
-      'Frames the course around systems thinking before any individual tool appears.',
-      'Sets building as the through-line the later units return to.',
+      'Introduces the mindset students will use to connect each concept back to a larger system.',
     ],
   },
   {

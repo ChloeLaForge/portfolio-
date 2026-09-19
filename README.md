@@ -56,7 +56,58 @@ Two kinds, both deliberately visible:
 
 If you can see either one on the live site, it still needs your content.
 
+## Portfolio assistant
+
+A chat panel on every page, answering from the markdown in
+`server/assistant/content/`. The browser only ever calls `POST /api/chat` on
+our own server, which calls OpenAI. The key never reaches the client.
+
+```
+src/assistant/            launcher, panel, chat hook, API helper
+src/content/assistant.ts  every visitor-facing string
+shared/assistant.ts       request/response types and input limits
+server/                   Express API (+ serves dist/ when it exists)
+server/assistant/config.ts   model, token cap, rate limits, file names
+server/assistant/content/    the knowledge + tone + rules (edit these)
+```
+
+**Change what it knows or how it sounds:** edit the `.md` files in
+`server/assistant/content/` and redeploy. `assistant-rules.md` holds the
+guardrails; `ai-portfolio-tone.md` is the voice.
+**Change the model:** `ASSISTANT_MODEL` in `server/assistant/config.ts`, or set
+`OPENAI_MODEL` in the environment.
+
+```bash
+cp .env.example .env     # then set OPENAI_API_KEY (server-side only, gitignored)
+npm run dev              # /api/chat is served by the Vite dev server
+npm run build && npm start   # production server: API + built site
+```
+
+## Chat analytics
+
+Every real visitor question is recorded (timestamp, anonymous session id, page,
+question, answer, topic, fallback flag, status, error type, model) in a
+PostgreSQL table, `chat_log`, so you can review what visitors ask. No IP
+address, cookie or other identifier is stored. Logging happens after the reply
+is sent and can never break a chat. Code lives in `server/analytics/`.
+
+```bash
+# Set DATABASE_URL and ANALYTICS_ADMIN_KEY (16+ random characters) on the server, then:
+curl -H "Authorization: Bearer $ANALYTICS_ADMIN_KEY" \
+  https://<your-service>.onrender.com/api/admin/analytics/export -o portfolio-chat-analytics.xlsx
+```
+
+The workbook has `CHAT LOG`, `SUMMARY` and `COMMON QUESTIONS` sheets. Topics and
+fallback detection are plain keyword rules (`server/analytics/classify.ts`), and
+`npm test` runs their unit tests. Without `DATABASE_URL` the chat still works and
+the server log says nothing is being recorded.
+
 ## Deploying
 
-Static build. `npm run build` → deploy `dist/`. On Netlify/Vercel, add an SPA
-rewrite (all paths → `/index.html`) so `/notebook` works on a hard refresh.
+The site is still a static build (`dist/`). The assistant needs the Node server,
+so it deploys as a Render **Web Service** (build `npm install && npm run build:server`,
+start `npm start`, env vars `OPENAI_API_KEY`, `DATABASE_URL`, `ANALYTICS_ADMIN_KEY`). Either keep the static site and
+add a rewrite `/api/*` -> `https://<web-service>.onrender.com/api/*` above its
+catch-all rewrite, or serve everything from the Web Service
+(build `npm install && npm run build`). A static host needs an SPA rewrite
+(all paths to `/index.html`) so `/notebook` works on a hard refresh.

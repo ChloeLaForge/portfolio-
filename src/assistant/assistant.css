@@ -1,0 +1,466 @@
+/* ============================================================
+   PORTFOLIO ASSISTANT
+   A quiet launcher fixed to the bottom-right, and a hairline-
+   bordered panel that opens above it. Uses the same tokens,
+   pill/hairline language and mono labels as the project nav.
+   ============================================================ */
+
+.assistant {
+  --assistant-margin: clamp(var(--space-4), 2.4vw, var(--space-5));
+  position: fixed;
+  right: max(var(--assistant-margin), env(safe-area-inset-right));
+  bottom: max(var(--assistant-margin), env(safe-area-inset-bottom));
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+.assistant > * {
+  pointer-events: auto;
+}
+
+/* ---------- Launcher ---------- */
+
+.assistant__launcher {
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  min-width: 44px;
+  padding: 0 13px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(10px) saturate(1.1);
+  color: var(--ink);
+  box-shadow:
+    0 1px 2px rgba(20, 20, 22, 0.04),
+    0 10px 28px -16px rgba(20, 20, 22, 0.22);
+  transition:
+    border-color var(--dur-fast) var(--ease),
+    background-color var(--dur-fast) var(--ease);
+}
+
+.assistant__launcher:hover {
+  border-color: var(--ink);
+}
+
+.assistant__icon {
+  flex: none;
+}
+
+/* The label sits to the left of the icon, so the icon never moves, and is always
+   visible while the assistant is collapsed. */
+.assistant__launcher-label {
+  margin-right: var(--space-3);
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: var(--size-label);
+  font-weight: 450;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-70);
+}
+
+/* First visit only: a soft warm halo that rises once and settles back to the
+   normal pill. It does not loop, move, or pulse. */
+.assistant__launcher[data-glow] {
+  animation: assistant-glow 5s var(--ease) both;
+}
+
+@keyframes assistant-glow {
+  0% {
+    box-shadow:
+      0 1px 2px rgba(20, 20, 22, 0.04),
+      0 10px 28px -16px rgba(20, 20, 22, 0.22),
+      0 0 0 0 rgba(236, 168, 96, 0),
+      0 0 0 0 rgba(236, 168, 96, 0);
+  }
+  20% {
+    background-color: color-mix(in srgb, rgb(246 214 168) 42%, var(--paper));
+    box-shadow:
+      0 1px 2px rgba(20, 20, 22, 0.04),
+      0 10px 28px -16px rgba(20, 20, 22, 0.22),
+      0 0 20px 4px rgba(236, 168, 96, 0.5),
+      0 0 0 5px rgba(236, 168, 96, 0.16);
+  }
+  100% {
+    box-shadow:
+      0 1px 2px rgba(20, 20, 22, 0.04),
+      0 10px 28px -16px rgba(20, 20, 22, 0.22),
+      0 0 0 0 rgba(236, 168, 96, 0),
+      0 0 0 0 rgba(236, 168, 96, 0);
+  }
+}
+
+/* ---------- Panel ---------- */
+
+.assistant__panel {
+  --assistant-gap: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  width: min(25rem, calc(100vw - 2 * var(--assistant-margin)));
+  height: min(40rem, 72vh);
+  max-height: calc(var(--assistant-vh, 100dvh) - 2 * var(--assistant-margin));
+  margin-bottom: var(--assistant-inset, 0px);
+  border: 1px solid var(--rule-strong);
+  border-radius: 16px;
+  background: var(--paper);
+  overflow: hidden;
+  box-shadow:
+    0 1px 2px rgba(20, 20, 22, 0.04),
+    0 24px 60px -28px rgba(20, 20, 22, 0.32);
+  animation: assistant-in var(--dur) var(--ease-out) both;
+}
+
+.assistant__panel:focus,
+.assistant__panel:focus-visible {
+  outline: none;
+}
+
+@keyframes assistant-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.assistant__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--assistant-gap) var(--space-3);
+  border-bottom: 1px solid var(--rule);
+}
+
+.assistant__title {
+  font-size: var(--size-small);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.assistant__subtitle {
+  margin-top: 2px;
+}
+
+.assistant__close {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin: -4px -6px 0 0;
+  border-radius: 50%;
+  color: var(--ink-45);
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.assistant__close:hover {
+  color: var(--ink);
+}
+
+/* ---------- Conversation ---------- */
+
+.assistant__log {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--assistant-gap);
+}
+
+.assistant__msg {
+  max-width: 100%;
+  font-size: var(--size-small);
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.assistant__msg p + p,
+.assistant__msg p + ul,
+.assistant__msg p + ol,
+.assistant__msg ul + p,
+.assistant__msg ol + p {
+  margin-top: var(--space-2);
+}
+
+.assistant__msg[data-role='assistant'] {
+  align-self: stretch;
+  color: var(--ink);
+}
+
+.assistant__msg[data-role='user'] {
+  align-self: flex-end;
+  max-width: 88%;
+  padding: var(--space-2) var(--space-4);
+  border-radius: 14px 14px 4px 14px;
+  background: var(--ink);
+  color: var(--paper);
+  white-space: pre-wrap;
+}
+
+.assistant__msg ul,
+.assistant__msg ol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.assistant__msg li {
+  position: relative;
+  padding-left: 1.05rem;
+}
+
+.assistant__msg ul li::before {
+  content: '';
+  position: absolute;
+  left: 0.2rem;
+  top: 0.68em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--ink-45);
+}
+
+.assistant__msg ol {
+  counter-reset: item;
+}
+
+.assistant__msg ol li {
+  counter-increment: item;
+}
+
+.assistant__msg ol li::before {
+  content: counter(item) '.';
+  position: absolute;
+  left: 0;
+  font-family: var(--font-mono);
+  font-size: var(--size-label);
+  color: var(--ink-45);
+  top: 0.32em;
+}
+
+.assistant__msg strong {
+  font-weight: 600;
+}
+
+.assistant__msg--error {
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--rule-strong);
+  color: var(--ink-70);
+}
+
+.assistant__retry {
+  margin-top: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--size-label);
+  font-weight: 450;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent-soft);
+}
+
+.assistant__retry:hover {
+  border-bottom-color: var(--accent);
+}
+
+/* ---------- Starters ---------- */
+
+.assistant__starters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.assistant__starter {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  text-align: left;
+  color: var(--ink-70);
+  transition:
+    color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+
+.assistant__starter:hover:not(:disabled) {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+/* ---------- Waiting indicator ---------- */
+
+.assistant__msg--thinking {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.assistant__thinking {
+  color: var(--ink-45);
+}
+
+.assistant__typing {
+  display: inline-flex;
+  gap: 4px;
+  padding: 0.55rem 0;
+}
+
+.assistant__typing i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ink-45);
+  animation: assistant-pulse 1.2s var(--ease) infinite;
+}
+
+.assistant__typing i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.assistant__typing i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes assistant-pulse {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .assistant__typing i {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+
+/* ---------- Input ---------- */
+
+.assistant__form {
+  padding: var(--space-3) var(--assistant-gap) var(--space-4);
+  border-top: 1px solid var(--rule);
+}
+
+.assistant__field {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+  padding: 6px 6px 6px var(--space-4);
+  border: 1px solid var(--rule-strong);
+  border-radius: 20px;
+  background: var(--paper);
+  transition:
+    border-color var(--dur-fast) var(--ease),
+    box-shadow var(--dur-fast) var(--ease);
+}
+
+.assistant__field:focus-within {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.assistant__input {
+  flex: 1;
+  min-width: 0;
+  max-height: 120px;
+  padding: 6px 0;
+  border: 0;
+  resize: none;
+  background: transparent;
+  font: inherit;
+  /* 16px keeps iOS from zooming the page when the field is focused. */
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+/* The field wrapper draws the focus ring; this overrides the global outline that loads later. */
+.assistant__input:focus,
+.assistant__input:focus-visible {
+  outline: none;
+}
+
+.assistant__input::placeholder {
+  color: var(--ink-45);
+}
+
+.assistant__send {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  transition: opacity var(--dur-fast) var(--ease);
+}
+
+.assistant__send:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.assistant__count {
+  margin-top: var(--space-2);
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: var(--size-label);
+  letter-spacing: var(--track-label);
+  color: var(--ink-45);
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 560px) {
+  .assistant {
+    --assistant-margin: var(--space-3);
+    left: max(var(--assistant-margin), env(safe-area-inset-left));
+  }
+
+  /* Much more compact on phones: smaller type and padding, same icon size. */
+  .assistant__launcher {
+    padding: 0 12px;
+  }
+
+  .assistant__launcher-label {
+    font-size: 0.625rem;
+    letter-spacing: 0.06em;
+  }
+
+  .assistant__launcher-label {
+    margin-right: var(--space-2);
+  }
+
+  .assistant__panel {
+    --assistant-gap: var(--space-4);
+    align-self: stretch;
+    width: auto;
+    height: calc(var(--assistant-vh, 100dvh) - 2 * var(--assistant-margin));
+  }
+}
+
+@media print {
+  .assistant {
+    display: none;
+  }
+}
